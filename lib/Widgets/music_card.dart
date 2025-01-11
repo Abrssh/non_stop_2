@@ -27,10 +27,10 @@ class MusicCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Container(
-        width: 220,
+        width: 210,
         height: 170,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
               color: Colors.white.withOpacity(1),
@@ -41,14 +41,31 @@ class MusicCard extends StatelessWidget {
           ],
           // color: Colors.white,
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.network(
-            "https://images.pexels.com/photos/3574678/pexels-photo-3574678.jpeg?auto=compress&cs=tinysrgb&w=600",
-            fit: BoxFit.cover,
-            alignment: Alignment.bottomLeft,
+        child: Stack(children: [
+          Align(
+            alignment: Alignment.center,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                "https://images.pexels.com/photos/3574678/pexels-photo-3574678.jpeg?auto=compress&cs=tinysrgb&w=600",
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomLeft,
+                width: 210,
+              ),
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.topRight,
+            child: IconButton(
+                padding: const EdgeInsets.only(right: 20),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.more_horiz,
+                  color: Colors.white,
+                  size: 25,
+                )),
+          )
+        ]),
       ),
     );
   }

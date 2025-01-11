@@ -16,15 +16,16 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
     var width = MediaQuery.of(context).size.width;
 
     return Container(
-      height: height * 0.12,
+      height: height * 0.105,
       width: width * 0.9,
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [
-          Colors.black.withOpacity(0.1),
-          Colors.black.withOpacity(0.2),
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-        borderRadius: BorderRadius.circular(10),
+        color: const Color.fromRGBO(63, 64, 84, 0.9),
+        // gradient: const LinearGradient(colors: [
+        //   Color.fromRGBO(63, 64, 84, 0.8),
+        //   Color.fromRGBO(63, 64, 84, 0.8),
+        // ], begin: Alignment.centerLeft, end: Alignment.centerRight),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,10 +38,9 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             },
             icon: Icon(
               Icons.home,
-              size: selectedIndex == 0 ? 36 : 24,
+              size: selectedIndex == 0 ? 32 : 24,
               color: selectedIndex == 0 ? Colors.white : Colors.grey,
             ),
-            iconSize: selectedIndex == 0 ? 36 : 24,
           ),
           IconButton(
             onPressed: () {
@@ -50,9 +50,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             },
             icon: Icon(
               Icons.search,
-              size: selectedIndex == 1 ? 36 : 24,
+              size: selectedIndex == 1 ? 32 : 24,
             ),
-            iconSize: selectedIndex == 1 ? 36 : 24,
             color: selectedIndex == 1 ? Colors.white : Colors.grey,
           ),
           IconButton(
@@ -63,9 +62,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             },
             icon: Icon(
               Icons.album,
-              size: selectedIndex == 2 ? 36 : 24,
+              size: selectedIndex == 2 ? 32 : 24,
             ),
-            iconSize: selectedIndex == 2 ? 36 : 24,
             color: selectedIndex == 2 ? Colors.white : Colors.grey,
           ),
           IconButton(
@@ -76,9 +74,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
             },
             icon: Icon(
               Icons.person,
-              size: selectedIndex == 3 ? 36 : 24,
+              size: selectedIndex == 3 ? 32 : 24,
             ),
-            iconSize: selectedIndex == 3 ? 36 : 24,
             color: selectedIndex == 3 ? Colors.white : Colors.grey,
           ),
         ],

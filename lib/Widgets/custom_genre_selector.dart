@@ -13,188 +13,140 @@ class _CustomGenreSelectorState extends State<CustomGenreSelector> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 35,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 150,
-              height: 10,
-              // margin: const EdgeInsets.all(10),
-              decoration: selectedIndex == 0
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(81, 41, 165, 1),
-                          Color.fromARGB(125, 88, 38, 196),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          TextButton(
+            onPressed: () => setState(() {
+              selectedIndex = 0;
+            }),
+            style: selectedIndex == 0
+                ? ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 83, 34, 161)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    )
-                  : null,
-              child: Align(
-                  child: TextButton(
-                      onPressed: () => setState(() {
-                            selectedIndex = 0;
-                          }),
-                      child: const Text(
-                        "Trending Right Now",
-                        style: TextStyle(color: Colors.white),
-                      ))),
+                    ),
+                    visualDensity: const VisualDensity(vertical: -3),
+                  )
+                : null,
+            child: const Text(
+              "Trending Right Now",
+              style: TextStyle(color: Colors.white, fontSize: 12),
             ),
           ),
           const SizedBox(width: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 80,
-              decoration: selectedIndex == 1
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(81, 41, 165, 1),
-                          Color.fromARGB(125, 88, 38, 196),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          TextButton(
+            style: selectedIndex == 1
+                ? ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 83, 34, 161)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    )
-                  : null,
-              child: Align(
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedIndex = 1;
-                    });
-                  },
-                  child:
-                      const Text('Rock', style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+                    ),
+                    visualDensity: const VisualDensity(vertical: -3),
+                  )
+                : null,
+            onPressed: () {
+              setState(() {
+                selectedIndex = 1;
+              });
+            },
+            child: const Text('Rock',
+                style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
           const SizedBox(width: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 80,
-              decoration: selectedIndex == 2
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(81, 41, 165, 1),
-                          Color.fromARGB(125, 88, 38, 196),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          TextButton(
+            style: selectedIndex == 2
+                ? ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 83, 34, 161)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    )
-                  : null,
-              child: Align(
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedIndex = 2;
-                    });
-                  },
-                  child: const Text('Hip-Hop',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+                    ),
+                    visualDensity: const VisualDensity(vertical: -3),
+                  )
+                : null,
+            onPressed: () {
+              setState(() {
+                selectedIndex = 2;
+              });
+            },
+            child: const Text('Hip-Hop',
+                style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
           const SizedBox(width: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 80,
-              decoration: selectedIndex == 3
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(81, 41, 165, 1),
-                          Color.fromARGB(125, 88, 38, 196),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          TextButton(
+            style: selectedIndex == 3
+                ? ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 83, 34, 161)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    )
-                  : null,
-              child: Align(
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedIndex = 3;
-                    });
-                  },
-                  child:
-                      const Text('Jazz', style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+                    ),
+                    visualDensity: const VisualDensity(vertical: -3),
+                  )
+                : null,
+            onPressed: () {
+              setState(() {
+                selectedIndex = 3;
+              });
+            },
+            child: const Text('Jazz',
+                style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
           const SizedBox(width: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 90,
-              decoration: selectedIndex == 4
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(81, 41, 165, 1),
-                          Color.fromARGB(125, 88, 38, 196),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          TextButton(
+            style: selectedIndex == 4
+                ? ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 83, 34, 161)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    )
-                  : null,
-              child: Align(
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedIndex = 4;
-                    });
-                  },
-                  child: const Text('Electronic',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+                    ),
+                    visualDensity: const VisualDensity(vertical: -3),
+                  )
+                : null,
+            onPressed: () {
+              setState(() {
+                selectedIndex = 4;
+              });
+            },
+            child: const Text('Electronic',
+                style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
           const SizedBox(width: 10),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Container(
-              width: 80,
-              decoration: selectedIndex == 5
-                  ? const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color.fromRGBO(81, 41, 165, 1),
-                          Color.fromARGB(125, 88, 38, 196),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+          TextButton(
+            style: selectedIndex == 5
+                ? ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        const Color.fromARGB(255, 83, 34, 161)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                    )
-                  : null,
-              child: Align(
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedIndex = 5;
-                    });
-                  },
-                  child: const Text('Country',
-                      style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+                    ),
+                    visualDensity: const VisualDensity(vertical: -3),
+                  )
+                : null,
+            onPressed: () {
+              setState(() {
+                selectedIndex = 5;
+              });
+            },
+            child: const Text('Country',
+                style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
         ],
       ),
