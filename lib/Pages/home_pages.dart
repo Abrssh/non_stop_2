@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:non_stop_2/Widgets/custom_album_widget.dart';
 import 'package:non_stop_2/Widgets/custom_bottom_navigation_bar.dart';
 import 'package:non_stop_2/Widgets/custom_genre_selector.dart';
 import 'package:non_stop_2/Widgets/custom_track_card.dart';
@@ -179,7 +180,26 @@ class MyHomePage extends StatelessWidget {
                           scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) => trackCards[index],
                           itemCount: trackCards.length,
-                        ))
+                        )),
+                    SizedBox(height: 300, width: 400, child: AlbumGrid()),
+                    // SizedBox(
+                    //   height: 200,
+                    //   width: 200,
+                    //   child: GridView.extent(
+                    //     // physics: const NeverScrollableScrollPhysics(),
+                    //     maxCrossAxisExtent: 100,
+                    //     children: List.generate(30, (index) {
+                    //       return Card(
+                    //         color: Colors.brown[400],
+                    //         child: Center(
+                    //           child: Text("Item $index"),
+                    //         ),
+                    //       );
+                    //     }),
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
+                    // AlbumGrid2()
                   ],
                 ),
               ),
