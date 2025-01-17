@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:non_stop_2/Pages/AI/flexible_widgets.dart';
-import 'package:non_stop_2/Widgets/custom_album_widget.dart';
-import 'package:non_stop_2/Widgets/custom_bottom_navigation_bar.dart';
-import 'package:non_stop_2/Widgets/custom_genre_selector.dart';
-import 'package:non_stop_2/Widgets/custom_track_card.dart';
-import 'package:non_stop_2/Widgets/music_card.dart';
-import 'package:non_stop_2/Widgets/search_widget.dart';
-import 'package:non_stop_2/cubit/bottom_navigation_cubit.dart';
+import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
+import 'package:non_stop_2/Presentation/Pages/AI/flexible_widgets.dart';
+import 'package:non_stop_2/Presentation/Widgets/custom_album_widget.dart';
+import 'package:non_stop_2/Presentation/Widgets/custom_bottom_navigation_bar.dart';
+import 'package:non_stop_2/Presentation/Widgets/custom_genre_selector.dart';
+import 'package:non_stop_2/Presentation/Widgets/custom_track_card.dart';
+import 'package:non_stop_2/Presentation/Widgets/music_card.dart';
+import 'package:non_stop_2/Presentation/Widgets/search_widget.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});

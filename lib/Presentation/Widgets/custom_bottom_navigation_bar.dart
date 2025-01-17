@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:non_stop_2/cubit/bottom_navigation_cubit.dart';
+import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
