@@ -221,7 +221,7 @@ class AlbumGrid2 extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Container(
-      color: Colors.brown,
+      // color: Colors.brown,
       height: screenHeight * 0.4,
       width: screenWidth,
       child: GridView.extent(

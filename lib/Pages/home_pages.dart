@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_stop_2/Pages/AI/flexible_widgets.dart';
 import 'package:non_stop_2/Widgets/custom_album_widget.dart';
 import 'package:non_stop_2/Widgets/custom_bottom_navigation_bar.dart';
 import 'package:non_stop_2/Widgets/custom_genre_selector.dart';
 import 'package:non_stop_2/Widgets/custom_track_card.dart';
 import 'package:non_stop_2/Widgets/music_card.dart';
 import 'package:non_stop_2/Widgets/search_widget.dart';
+import 'package:non_stop_2/cubit/bottom_navigation_cubit.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
@@ -104,132 +107,201 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromRGBO(93, 63, 130, 1),
-                Color.fromRGBO(62, 41, 90, 1),
-              ],
-            ),
-          ),
-        ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Align(
-              alignment: Alignment.center,
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+    final List<Widget> tabs = [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Align(
+          alignment: Alignment.center,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                const SearchWidget(),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
                   children: [
                     const SizedBox(
-                      height: 40,
+                      width: 10,
                     ),
-                    const SearchWidget(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Trending right now",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
+                    Text(
+                      "Trending right now",
+                      style:
+                          Theme.of(context).textTheme.headlineSmall!.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 25,
                               ),
-                        ),
-                      ],
                     ),
-                    SizedBox(
-                      height: 160,
-                      width: MediaQuery.of(context).size.width,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 8,
-                        itemBuilder: (_, index) {
-                          return const MusicCard();
-                        },
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const CustomGenreSelector(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: 230,
-                        child: ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) => trackCards[index],
-                          itemCount: trackCards.length,
-                        )),
-                    SizedBox(height: 300, width: 400, child: AlbumGrid()),
-                    // SizedBox(
-                    //   height: 200,
-                    //   width: 200,
-                    //   child: GridView.extent(
-                    //     // physics: const NeverScrollableScrollPhysics(),
-                    //     maxCrossAxisExtent: 100,
-                    //     children: List.generate(30, (index) {
-                    //       return Card(
-                    //         color: Colors.brown[400],
-                    //         child: Center(
-                    //           child: Text("Item $index"),
-                    //         ),
-                    //       );
-                    //     }),
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 10),
-                    // AlbumGrid2()
                   ],
                 ),
-              ),
+                SizedBox(
+                  height: 160,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 8,
+                    itemBuilder: (_, index) {
+                      return const MusicCard();
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const CustomGenreSelector(),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 230,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) => trackCards[index],
+                    itemCount: trackCards.length,
+                  ),
+                ),
+
+                // SizedBox(
+                //   height: 200,
+                //   width: 200,
+                //   child: GridView.extent(
+                //     // physics: const NeverScrollableScrollPhysics(),
+                //     maxCrossAxisExtent: 100,
+                //     children: List.generate(30, (index) {
+                //       return Card(
+                //         color: Colors.brown[400],
+                //         child: Center(
+                //           child: Text("Item $index"),
+                //         ),
+                //       );
+                //     }),
+                //   ),
+                // ),
+                // const SizedBox(height: 10),
+                // AlbumGrid2()
+              ],
             ),
           ),
         ),
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: CustomBottomNavBar(),
+      ),
+      Align(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Flexible(
+                flex: 10,
+                child: Container(
+                    color: Colors.white.withOpacity(0.05), child: AlbumGrid()),
+              ),
+              const Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
         ),
-        // FractionallySizedBox(
-        //   // height: 400,
-        //   // width: 200,
-        //   widthFactor: 0.8,
-        //   heightFactor: 0.9,
-        //   child: ListView.builder(
-        //     scrollDirection: Axis.vertical,
-        //     itemCount: 8,
-        //     itemBuilder: (_, index) {
-        //       return const SizedBox(
-        //         height: 200,
-        //         child: Padding(
-        //           padding: EdgeInsets.all(8.0),
-        //           child: MusicCard(),
-        //         ),
-        //       );
-        //     },
-        //   ),
-        // ),
-      ],
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(height: 400, width: 400, child: AlbumGrid2()),
+      ),
+      const FlexExamplePage(),
+    ];
+
+    return BlocProvider(
+      create: (context) => BottomNavigationCubit(),
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(93, 63, 130, 1),
+                  Color.fromRGBO(62, 41, 90, 1),
+                ],
+              ),
+            ),
+          ),
+          // Animated Background Color Change
+          // BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+          //   builder: (context, state) {
+          //     List<List<Color>> gradients = [
+          //       [
+          //         const Color.fromRGBO(93, 63, 130, 1),
+          //         const Color.fromRGBO(62, 41, 90, 1),
+          //       ],
+          //       [
+          //         const Color.fromRGBO(143, 63, 130, 1),
+          //         const Color.fromRGBO(112, 41, 90, 1),
+          //       ],
+          //       [
+          //         const Color.fromRGBO(63, 143, 130, 1),
+          //         const Color.fromRGBO(41, 112, 90, 1),
+          //       ],
+          //       [
+          //         const Color.fromRGBO(63, 63, 143, 1),
+          //         const Color.fromRGBO(41, 41, 112, 1),
+          //       ],
+          //     ];
+
+          //     return AnimatedContainer(
+          //       duration:
+          //           const Duration(milliseconds: 700), // Animation duration
+          //       curve: Curves.easeIn, // Animation curve
+          //       width: double.infinity,
+          //       height: double.infinity,
+          //       decoration: BoxDecoration(
+          //         gradient: LinearGradient(
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //           colors: gradients[state.currentIndex],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+          BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+            builder: (context, state) {
+              return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: tabs[state.currentIndex]);
+            },
+          ),
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomBottomNavBar(),
+          ),
+          // FractionallySizedBox(
+          //   // height: 400,
+          //   // width: 200,
+          //   widthFactor: 0.8,
+          //   heightFactor: 0.9,
+          //   child: ListView.builder(
+          //     scrollDirection: Axis.vertical,
+          //     itemCount: 8,
+          //     itemBuilder: (_, index) {
+          //       return const SizedBox(
+          //         height: 200,
+          //         child: Padding(
+          //           padding: EdgeInsets.all(8.0),
+          //           child: MusicCard(),
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

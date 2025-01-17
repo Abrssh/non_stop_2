@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_stop_2/cubit/bottom_navigation_cubit.dart';
 
 class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({super.key});
@@ -8,7 +10,7 @@ class CustomBottomNavBar extends StatefulWidget {
 }
 
 class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
-  int selectedIndex = 0;
+  // int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,54 +32,111 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                selectedIndex = 0;
-              });
+          BlocListener<BottomNavigationCubit, BottomNavigationState>(
+            listener: (context, state) {
+              debugPrint("Listening to state changes: ${state.currentIndex}");
             },
-            icon: Icon(
-              Icons.home,
-              size: selectedIndex == 0 ? 32 : 24,
-              color: selectedIndex == 0 ? Colors.white : Colors.grey,
+            child: BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+              builder: (context, state) {
+                return IconButton(
+                  onPressed: () {
+                    context.read<BottomNavigationCubit>().setIndex(0);
+                  },
+                  icon: Icon(
+                    Icons.home,
+                    size: context
+                                .read<BottomNavigationCubit>()
+                                .state
+                                .currentIndex ==
+                            0
+                        ? 32
+                        : 24,
+                    color: context
+                                .read<BottomNavigationCubit>()
+                                .state
+                                .currentIndex ==
+                            0
+                        ? Colors.white
+                        : Colors.grey,
+                  ),
+                );
+              },
             ),
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                selectedIndex = 1;
-              });
+          BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () {
+                  BlocProvider.of<BottomNavigationCubit>(context).setIndex(1);
+                },
+                icon: Icon(
+                  Icons.search,
+                  size: context
+                              .read<BottomNavigationCubit>()
+                              .state
+                              .currentIndex ==
+                          1
+                      ? 32
+                      : 24,
+                ),
+                color:
+                    context.read<BottomNavigationCubit>().state.currentIndex ==
+                            1
+                        ? Colors.white
+                        : Colors.grey,
+              );
             },
-            icon: Icon(
-              Icons.search,
-              size: selectedIndex == 1 ? 32 : 24,
-            ),
-            color: selectedIndex == 1 ? Colors.white : Colors.grey,
           ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                selectedIndex = 2;
-              });
+          BlocConsumer<BottomNavigationCubit, BottomNavigationState>(
+            listener: (context, state) {
+              debugPrint("Listen 2: ${state.currentIndex}");
             },
-            icon: Icon(
-              Icons.album,
-              size: selectedIndex == 2 ? 32 : 24,
-            ),
-            color: selectedIndex == 2 ? Colors.white : Colors.grey,
-          ),
-          IconButton(
-            onPressed: () {
-              setState(() {
-                selectedIndex = 3;
-              });
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () {
+                  context.read<BottomNavigationCubit>().setIndex(2);
+                  setState(() {});
+                },
+                icon: Icon(
+                  Icons.album,
+                  size: context
+                              .read<BottomNavigationCubit>()
+                              .state
+                              .currentIndex ==
+                          2
+                      ? 32
+                      : 24,
+                ),
+                color:
+                    context.read<BottomNavigationCubit>().state.currentIndex ==
+                            2
+                        ? Colors.white
+                        : Colors.grey,
+              );
             },
-            icon: Icon(
-              Icons.person,
-              size: selectedIndex == 3 ? 32 : 24,
-            ),
-            color: selectedIndex == 3 ? Colors.white : Colors.grey,
+            buildWhen: (previous, current) {
+              debugPrint(
+                  "Bw: ${previous.currentIndex} ${current.currentIndex}");
+              // return
+              return previous.currentIndex != current.currentIndex;
+            },
+            listenWhen: (previous, current) =>
+                (previous.currentIndex - current.currentIndex).abs() > 1,
           ),
+          BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+            builder: (context, state) {
+              return IconButton(
+                onPressed: () {
+                  context.read<BottomNavigationCubit>().setIndex(3);
+                },
+                icon: Icon(
+                  Icons.person,
+                  size: state.currentIndex == 3 ? 32 : 24,
+                ),
+                color: state.currentIndex == 3 ? Colors.white : Colors.grey,
+              );
+            },
+          )
         ],
       ),
     );
