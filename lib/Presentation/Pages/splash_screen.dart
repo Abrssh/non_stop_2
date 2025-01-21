@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:non_stop_2/Presentation/Pages/home_pages.dart';
 
 class IntroScreen extends StatelessWidget {
   const IntroScreen({Key? key}) : super(key: key);
@@ -69,11 +68,12 @@ class IntroScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyHomePage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => const MyHomePage()),
+                    // );
+                    Navigator.pushNamed(context, "/home");
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

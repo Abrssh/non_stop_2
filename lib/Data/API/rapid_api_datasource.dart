@@ -28,7 +28,7 @@ class RapidApiDatasource {
         throw Exception("Server error. Please try again later.");
       } else {
         throw Exception(
-            "Failed to fetch players. Error code: ${response.statusCode}");
+            "Failed to fetch Albums. Error code: ${response.statusCode}");
       }
     } catch (e) {
       throw Exception("Failed to fetch albums");
