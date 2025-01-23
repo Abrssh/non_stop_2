@@ -39,5 +39,6 @@ class AppRouter {
 
   void dispose() {
     _bottomNavigationCubit.close();
+    _internetConnBloc.close();
   }
 }

@@ -3,7 +3,8 @@ part of 'internet_conn_bloc.dart';
 @immutable
 sealed class InternetConnState {
   final String connType;
-  const InternetConnState({required this.connType});
+  final bool listening;
+  const InternetConnState({required this.connType, this.listening = false});
 }
 
 final class InternetConnInitial extends InternetConnState {
@@ -25,7 +26,8 @@ final class InternetConnLoading extends InternetConnState {
 final class InternetConnConnected extends InternetConnState {
   final InternetConnection _internetConnection;
   final ConnectionType _connectionType;
-  const InternetConnConnected({required ConnectionType connectionType})
+  const InternetConnConnected(
+      {required ConnectionType connectionType, super.listening = false})
       : _connectionType = connectionType,
         _internetConnection = InternetConnection.connected,
         super(connType: "Connected");
@@ -35,7 +37,7 @@ final class InternetConnConnected extends InternetConnState {
 
 final class InternetConnDisconnected extends InternetConnState {
   final InternetConnection _internetConnection;
-  const InternetConnDisconnected()
+  const InternetConnDisconnected({super.listening = false})
       : _internetConnection = InternetConnection.disconnected,
         super(connType: "Disconnected");
   InternetConnection get internetConnection => _internetConnection;

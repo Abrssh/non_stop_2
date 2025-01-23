@@ -11,17 +11,8 @@ part 'internet_conn_state.dart';
 class InternetConnBloc extends Bloc<InternetConnEvent, InternetConnState> {
   late final StreamSubscription internetSubscription;
   InternetConnBloc() : super(const InternetConnInitial()) {
-    internetSubscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      if (result == ConnectivityResult.mobile) {
-        add(const ListenToInternetConnEvent(param: "Mobile"));
-      } else if (result == ConnectivityResult.wifi) {
-        add(const ListenToInternetConnEvent(param: "Wifi"));
-      } else {
-        add(const ListenToInternetConnEvent(param: "None"));
-      }
-    });
+    // Subscribe to stream on initialization
+    // start_listening_to_connectivity();
     on<InternetConnEvent>((event, emit) {
       // debugPrint("Event Recieved: ${event.runtimeType}");
     });
@@ -32,6 +23,8 @@ class InternetConnBloc extends Bloc<InternetConnEvent, InternetConnState> {
       //   emit(InternetConnLoading());
       //   debugPrint("Emiting Loading");
       // }
+
+      debugPrint("State: ${state.connType}");
       emit(const InternetConnLoading());
       final ConnectivityResult connectivityResult =
           await (Connectivity().checkConnectivity());
@@ -47,12 +40,35 @@ class InternetConnBloc extends Bloc<InternetConnEvent, InternetConnState> {
     });
     on<ListenToInternetConnEvent>((event, emit) {
       if (event.param == "Mobile") {
-        emit(
-            const InternetConnConnected(connectionType: ConnectionType.mobile));
+        emit(const InternetConnConnected(
+            connectionType: ConnectionType.mobile, listening: true));
       } else if (event.param == "Wifi") {
-        emit(const InternetConnConnected(connectionType: ConnectionType.wifi));
+        emit(const InternetConnConnected(
+            connectionType: ConnectionType.wifi, listening: true));
       } else {
-        emit(const InternetConnDisconnected());
+        emit(const InternetConnDisconnected(listening: true));
+      }
+    });
+
+    on<StartListeningEvent>(
+      (event, emit) {
+        if (!state.listening) {
+          startListeningToConnectivity();
+        }
+      },
+    );
+  }
+
+  void startListeningToConnectivity() {
+    internetSubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (result == ConnectivityResult.mobile) {
+        add(const ListenToInternetConnEvent(param: "Mobile"));
+      } else if (result == ConnectivityResult.wifi) {
+        add(const ListenToInternetConnEvent(param: "Wifi"));
+      } else {
+        add(const ListenToInternetConnEvent(param: "None"));
       }
     });
   }

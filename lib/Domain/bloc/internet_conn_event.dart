@@ -14,3 +14,7 @@ class ListenToInternetConnEvent extends InternetConnEvent {
   const ListenToInternetConnEvent({required String param})
       : super(param: param);
 }
+
+class StartListeningEvent extends InternetConnEvent {
+  const StartListeningEvent({required String param}) : super(param: param);
+}

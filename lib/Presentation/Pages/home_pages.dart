@@ -300,36 +300,43 @@ class MyHomePage extends StatelessWidget {
         //   ),
         // ),
         // Internet Connection Listener
-        // FractionallySizedBox(
-        //   widthFactor: 0.8,
-        //   heightFactor: 0.9,
-        //   child: BlocListener<InternetConnBloc, InternetConnState>(
-        //       listener: (context, state) {
-        //         debugPrint("InternetConnState: ${state.connType}");
-        //       },
-        //       child: Row(
-        //         children: [
-        //           const Spacer(),
-        //           Text(
-        //             "Internet Conn",
-        //             style: Theme.of(context)
-        //                 .textTheme
-        //                 .bodyMedium!
-        //                 .copyWith(color: Colors.white),
-        //           ),
-        //           const Spacer(),
-        //           IconButton(
-        //               onPressed: () {
-        //                 context.read<InternetConnBloc>().add(
-        //                       // const CheckInternetConnEvent(param: "BlocParam"),
-        //                       const ListenToInternetConnEvent(
-        //                           param: "BlocParam"),
-        //                     );
-        //               },
-        //               icon: const Icon(Icons.refresh))
-        //         ],
-        //       )),
-        // )
+        FractionallySizedBox(
+          widthFactor: 0.8,
+          heightFactor: 0.9,
+          child: BlocListener<InternetConnBloc, InternetConnState>(
+              listener: (context, state) {
+                debugPrint("InternetConnState: ${state.connType}");
+              },
+              child: Row(
+                children: [
+                  const Spacer(),
+                  Text(
+                    "Internet Conn",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: Colors.white),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                      onPressed: () {
+                        // context.read<InternetConnBloc>().add(
+                        //       const CheckInternetConnEvent(param: "BlocParam"),
+                        //     );
+                        // context
+                        //     .read<InternetConnBloc>()
+                        //     .startListeningToConnectivity();
+                        context.read<InternetConnBloc>().add(
+                              const StartListeningEvent(param: "BlocParam"),
+                            );
+                      },
+                      icon: const Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                      ))
+                ],
+              )),
+        )
       ],
     );
   }
