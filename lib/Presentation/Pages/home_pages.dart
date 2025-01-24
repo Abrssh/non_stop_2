@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:non_stop_2/Domain/bloc/internet_conn_bloc.dart';
+// import 'package:non_stop_2/Domain/bloc/internet_conn_bloc.dart';
 import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
 import 'package:non_stop_2/Presentation/Pages/AI/flexible_widgets.dart';
 import 'package:non_stop_2/Presentation/Widgets/custom_album_widget.dart';
@@ -208,9 +208,22 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(height: 400, width: 400, child: AlbumGrid2()),
+      Align(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Flexible(
+                flex: 10,
+                child: Container(
+                    color: Colors.white.withOpacity(0.05), child: AlbumGrid()),
+              ),
+              const Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
+        ),
       ),
       const FlexExamplePage(),
     ];
@@ -300,43 +313,43 @@ class MyHomePage extends StatelessWidget {
         //   ),
         // ),
         // Internet Connection Listener
-        FractionallySizedBox(
-          widthFactor: 0.8,
-          heightFactor: 0.9,
-          child: BlocListener<InternetConnBloc, InternetConnState>(
-              listener: (context, state) {
-                debugPrint("InternetConnState: ${state.connType}");
-              },
-              child: Row(
-                children: [
-                  const Spacer(),
-                  Text(
-                    "Internet Conn",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium!
-                        .copyWith(color: Colors.white),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                      onPressed: () {
-                        // context.read<InternetConnBloc>().add(
-                        //       const CheckInternetConnEvent(param: "BlocParam"),
-                        //     );
-                        // context
-                        //     .read<InternetConnBloc>()
-                        //     .startListeningToConnectivity();
-                        context.read<InternetConnBloc>().add(
-                              const StartListeningEvent(param: "BlocParam"),
-                            );
-                      },
-                      icon: const Icon(
-                        Icons.refresh,
-                        color: Colors.white,
-                      ))
-                ],
-              )),
-        )
+        // FractionallySizedBox(
+        //   widthFactor: 0.8,
+        //   heightFactor: 0.9,
+        //   child: BlocListener<InternetConnBloc, InternetConnState>(
+        //       listener: (context, state) {
+        //         debugPrint("InternetConnState: ${state.connType}");
+        //       },
+        //       child: Row(
+        //         children: [
+        //           const Spacer(),
+        //           Text(
+        //             "Internet Conn",
+        //             style: Theme.of(context)
+        //                 .textTheme
+        //                 .bodyMedium!
+        //                 .copyWith(color: Colors.white),
+        //           ),
+        //           const Spacer(),
+        //           IconButton(
+        //               onPressed: () {
+        //                 // context.read<InternetConnBloc>().add(
+        //                 //       const CheckInternetConnEvent(param: "BlocParam"),
+        //                 //     );
+        //                 // context
+        //                 //     .read<InternetConnBloc>()
+        //                 //     .startListeningToConnectivity();
+        //                 context.read<InternetConnBloc>().add(
+        //                       const StartListeningEvent(param: "BlocParam"),
+        //                     );
+        //               },
+        //               icon: const Icon(
+        //                 Icons.refresh,
+        //                 color: Colors.white,
+        //               ))
+        //         ],
+        //       )),
+        // )
       ],
     );
   }
