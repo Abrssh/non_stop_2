@@ -16,8 +16,8 @@ class Album {
       id: json['id'],
       name: json['name'],
       artist: json['artists'][0]['name'],
-      smallImageUrl: json['images'][0]['url'],
-      largeImageUrl: json['images'][1]['url'],
+      largeImageUrl: json['images'][0]['url'],
+      smallImageUrl: json['images'][1]['url'],
       spotifyUrl: json['external_urls']['spotify'],
       date: json['release_date'],
     );
