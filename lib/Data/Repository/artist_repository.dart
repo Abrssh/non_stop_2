@@ -9,11 +9,16 @@ class ArtistRepository implements GetArtistsUseCase {
 
   @override
   Future<List<Artist>> getArtists() async {
-    List<dynamic> fetchedArtists =
-        await rapidApiDatasource.fetchGroupData(type: "artists");
-    return fetchedArtists.map((artist) {
-      Artist artistData = Artist.fromJson(artist);
-      return artistData;
-    }).toList();
+    try {
+      List<dynamic> fetchedArtists =
+          await rapidApiDatasource.fetchGroupData(type: "artists");
+      return fetchedArtists.map((artist) {
+        Artist artistData = Artist.fromJson(artist);
+        return artistData;
+      }).toList();
+    } catch (e) {
+      throw Exception(
+          "An Error occurred while processing artist data. Error Info: $e");
+    }
   }
 }

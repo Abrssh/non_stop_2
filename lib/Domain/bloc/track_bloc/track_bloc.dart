@@ -9,7 +9,8 @@ part 'track_state.dart';
 class TrackBloc extends Bloc<TrackEvent, TrackState> {
   final GetTracksUseCase getTracksUseCase;
 
-  TrackBloc(this.getTracksUseCase) : super(const SearchedTracksState()) {
+  TrackBloc({required this.getTracksUseCase})
+      : super(const SearchedTracksState()) {
     on<SearchTracksEvent>(_onSearchTracks);
     on<GetTopTracksEvent>(_onGetTopTracks);
     on<GetTracksByAlbumEvent>(_onGetTracksByAlbum);
