@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_stop_2/Data/Model/album.dart';
 import 'package:non_stop_2/Domain/Interface/get_albums_usecase.dart';
@@ -9,6 +10,7 @@ part 'get_albums_state.dart';
 class GetAlbumsBloc extends Bloc<GetAlbumsEvent, GetAlbumsState> {
   final GetAlbumsUseCase albumsUseCase;
   GetAlbumsBloc({required this.albumsUseCase}) : super(const GetAlbumsState()) {
+    debugPrint("GetAlbumsBloc constructor called");
     on<GetPopularAlbumsEvent>(_getAlbums);
     on<GetArtistAlbumsEvent>(_getArtistAlbums);
   }

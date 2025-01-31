@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,6 +20,7 @@ class RapidApiDatasource {
       });
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        debugPrint("Fetched data: ${data[type]['items'].length} type: $type");
         return data[type]['items'];
       } else if (response.statusCode == 401) {
         throw Exception("Unauthorized access. API needs to be Updated.");
@@ -33,7 +35,7 @@ class RapidApiDatasource {
             "Failed to fetch Albums. Error code: ${response.statusCode}");
       }
     } catch (e) {
-      throw Exception("Failed to fetch albums");
+      throw Exception("Failed to fetch Group Data. Error info: $e");
     }
   }
 

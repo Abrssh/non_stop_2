@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:non_stop_2/Data/API/rapid_api_datasource.dart';
 import 'package:non_stop_2/Data/Model/album.dart';
 import 'package:non_stop_2/Domain/Interface/get_albums_usecase.dart';
@@ -5,7 +6,9 @@ import 'package:non_stop_2/Domain/Interface/get_albums_usecase.dart';
 class AlbumRepository implements GetAlbumsUseCase {
   final RapidApiDatasource rapidApiDatasource;
 
-  AlbumRepository({required this.rapidApiDatasource});
+  AlbumRepository({required this.rapidApiDatasource}) {
+    debugPrint("AlbumRepository created");
+  }
 
   @override
   Future<List<Album>> getAlbums() async {

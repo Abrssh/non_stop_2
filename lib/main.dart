@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:non_stop_2/Presentation/router/app_router.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: "assets/api_key.env");
   runApp(const MyApp());
 }
 

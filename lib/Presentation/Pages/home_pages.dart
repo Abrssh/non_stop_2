@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:non_stop_2/Domain/bloc/internet_conn_bloc.dart';
 import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
 import 'package:non_stop_2/Presentation/Pages/AI/flexible_widgets.dart';
-import 'package:non_stop_2/Presentation/Widgets/custom_album_widget.dart';
+import 'package:non_stop_2/Presentation/Pages/album_page.dart';
+import 'package:non_stop_2/Presentation/Pages/artist_page.dart';
 import 'package:non_stop_2/Presentation/Widgets/custom_bottom_navigation_bar.dart';
 import 'package:non_stop_2/Presentation/Widgets/custom_genre_selector.dart';
 import 'package:non_stop_2/Presentation/Widgets/custom_track_card.dart';
@@ -191,40 +192,8 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-      Align(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Flexible(
-                flex: 10,
-                child: Container(
-                    color: Colors.white.withOpacity(0.05), child: AlbumGrid()),
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-            ],
-          ),
-        ),
-      ),
-      Align(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Flexible(
-                flex: 10,
-                child: Container(
-                    color: Colors.white.withOpacity(0.05), child: AlbumGrid()),
-              ),
-              const Spacer(
-                flex: 1,
-              ),
-            ],
-          ),
-        ),
-      ),
+      const AlbumPage(),
+      const ArtistPage(),
       const FlexExamplePage(),
     ];
 

@@ -2,6 +2,7 @@ part of 'artist_bloc.dart';
 
 final class ArtistState extends Equatable {
   final List<Artist> artists;
+  final bool isIntial;
   final bool isLoading;
   final bool isError;
   final String errorMessage;
@@ -9,6 +10,7 @@ final class ArtistState extends Equatable {
       {this.artists = const [],
       this.isLoading = false,
       this.isError = false,
+      this.isIntial = true,
       this.errorMessage = ''});
 
   ArtistState copyWith({
@@ -16,15 +18,18 @@ final class ArtistState extends Equatable {
     bool? isLoading,
     bool? isError,
     String? errorMessage,
+    bool? isIntial,
   }) {
     return ArtistState(
       artists: artists ?? this.artists,
       isLoading: isLoading ?? this.isLoading,
       isError: isError ?? this.isError,
       errorMessage: errorMessage ?? this.errorMessage,
+      isIntial: isIntial ?? this.isIntial,
     );
   }
 
   @override
-  List<Object> get props => [artists, isLoading, isError, errorMessage];
+  List<Object> get props =>
+      [artists, isLoading, isError, errorMessage, isIntial];
 }

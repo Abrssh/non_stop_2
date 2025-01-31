@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Artist {
   final String id, name, smallImageUrl, largeImageUrl;
   // final int popularity;
@@ -11,15 +13,50 @@ class Artist {
   });
 
   factory Artist.fromJson(Map<String, dynamic> json) {
-    String uri = json['data']['uri'];
-    List<String> uriParts = uri.split(':');
-    return Artist(
+    try {
+      String uri = json['data']['uri'];
+      List<String> uriParts = uri.split(':');
+      bool imageExists = false;
+      try {
+        if (json['data']['visuals']['avatarImage']['sources'][2]['url'] !=
+            null) {
+          imageExists = true;
+        } else {
+          imageExists = false;
+        }
+      } catch (e) {
+        imageExists = false;
+        // debugPrint("erImgEx: $e ErrorImage Exists: $imageExists");
+      }
+      const String defaultUrl =
+          "https://images.pexels.com/photos/17573962/pexels-photo-17573962/free-photo-of-portrait-of-woman-holding-vinyl-record-to-her-face.jpeg?";
+
+      debugPrint("Image Exists: $imageExists");
+
+      return Artist(
         id: uriParts.last,
         name: json['data']['profile']['name'],
-        largeImageUrl: json['data']['visuals']['sources'][2],
-        smallImageUrl: json['data']['visuals']['sources'][1]
+        largeImageUrl: imageExists
+            ? json['data']['visuals']['avatarImage']['sources'][2]['url']
+            : defaultUrl,
+        smallImageUrl: imageExists
+            ? json['data']['visuals']['avatarImage']['sources'][1]['url']
+            : defaultUrl,
         // popularity: json['popularity'],
-        );
+      );
+    } catch (e) {
+      debugPrint("Artist.fromJson Error: $e");
+      const String defaultUrl =
+          "https://images.pexels.com/photos/17573962/pexels-photo-17573962/free-photo-of-portrait-of-woman-holding-vinyl-record-to-her-face.jpeg?";
+
+      return Artist(
+        id: "0",
+        name: "Unknown",
+        largeImageUrl: defaultUrl,
+        smallImageUrl: defaultUrl,
+        // popularity: 0,
+      );
+    }
   }
 
   Map<String, dynamic> toJson() {

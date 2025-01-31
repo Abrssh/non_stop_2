@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_stop_2/Domain/bloc/album_bloc/get_albums_bloc.dart';
 
 class CustomAlbumWidget extends StatelessWidget {
   final String albumName;
@@ -94,38 +96,6 @@ class CustomAlbumWidget extends StatelessWidget {
 }
 
 class AlbumGrid extends StatelessWidget {
-  // final List<Map<String, String>> albums;
-
-  // const AlbumGrid(
-  //     {Key? key,
-  //     this.albums = const [
-  //       {
-  //         'imageUrl':
-  //             'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-  //         'albumName': 'Default Album 1',
-  //         'artistName': 'Default Artist 1',
-  //       },
-  //       {
-  //         'imageUrl':
-  //             'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-  //         'albumName': 'Default Album 2',
-  //         'artistName': 'Default Artist 2',
-  //       },
-  //       {
-  //         'imageUrl':
-  //             'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-  //         'albumName': 'Default Album 3',
-  //         'artistName': 'Default Artist 3',
-  //       },
-  //       {
-  //         'imageUrl':
-  //             'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-  //         'albumName': 'Default Album 4',
-  //         'artistName': 'Default Artist 4',
-  //       },
-  //     ]})
-  //     : super(key: key);
-
   final List<CustomAlbumWidget> albums = [
     const CustomAlbumWidget(
       imageUrl:
@@ -162,23 +132,27 @@ class AlbumGrid extends StatelessWidget {
         final isLandscapeOrTablet = constraints.maxWidth > 600;
         final crossAxisCount = isLandscapeOrTablet ? 4 : 2;
 
-        return GridView.builder(
-          padding: const EdgeInsets.all(8.0),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: crossAxisCount,
-            childAspectRatio: 3 / 5,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 15.0,
-            mainAxisExtent: 180,
-          ),
-          itemCount: albums.length,
-          itemBuilder: (context, index) {
-            // return CustomAlbumWidget(
-            //   imageUrl: albums[index]['imageUrl'] ?? '',
-            //   albumName: albums[index]['albumName'] ?? '',
-            //   artistName: albums[index]['artistName'] ?? '',
-            // );
-            return albums[index];
+        return BlocBuilder<GetAlbumsBloc, GetAlbumsState>(
+          builder: (context, state) {
+            return GridView.builder(
+              padding: const EdgeInsets.all(8.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                childAspectRatio: 3 / 5,
+                crossAxisSpacing: 8.0,
+                mainAxisSpacing: 15.0,
+                mainAxisExtent: 180,
+              ),
+              itemCount: albums.length,
+              itemBuilder: (context, index) {
+                // return CustomAlbumWidget(
+                //   imageUrl: albums[index]['imageUrl'] ?? '',
+                //   albumName: albums[index]['albumName'] ?? '',
+                //   artistName: albums[index]['artistName'] ?? '',
+                // );
+                return albums[index];
+              },
+            );
           },
         );
       },
