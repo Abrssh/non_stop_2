@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomTrackCard extends StatelessWidget {
   final double width, height;
   final bool isFavorite;
-  final String trackName, artistName;
+  final String trackName, artistName, imageUrl;
 
   const CustomTrackCard(
       {super.key,
@@ -11,6 +11,7 @@ class CustomTrackCard extends StatelessWidget {
       required this.height,
       required this.trackName,
       required this.artistName,
+      required this.imageUrl,
       required this.isFavorite});
 
   @override
@@ -28,7 +29,9 @@ class CustomTrackCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
-                  'https://images.pexels.com/photos/17573962/pexels-photo-17573962/free-photo-of-portrait-of-woman-holding-vinyl-record-to-her-face.jpeg?auto=compress&cs=tinysrgb&w=600',
+                  imageUrl.isNotEmpty
+                      ? imageUrl
+                      : 'https://images.pexels.com/photos/17573962/pexels-photo-17573962/free-photo-of-portrait-of-woman-holding-vinyl-record-to-her-face.jpeg?auto=compress&cs=tinysrgb&w=600',
                   fit: BoxFit.cover,
                   alignment: Alignment.center,
                 ),
@@ -45,8 +48,8 @@ class CustomTrackCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    trackName.length > 20
-                        ? '${trackName.substring(0, 17)}...'
+                    trackName.length > 17
+                        ? '${trackName.substring(0, 14)}...'
                         : trackName,
                     style: Theme.of(context)
                         .textTheme
@@ -64,8 +67,8 @@ class CustomTrackCard extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        artistName.length > 20
-                            ? '${artistName.substring(0, 17)}...'
+                        artistName.length > 17
+                            ? '${artistName.substring(0, 14)}...'
                             : artistName,
                         style: Theme.of(context)
                             .textTheme

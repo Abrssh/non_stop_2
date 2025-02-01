@@ -19,6 +19,7 @@ class AlbumRepository implements GetAlbumsUseCase {
         return albumData;
       }).toList();
     } catch (e) {
+      debugPrint("Error occurred in getAlbums funciton: $e");
       throw Exception(
           "An Error occurred while processing album data. Error Info: $e");
     }

@@ -31,7 +31,7 @@ class Artist {
       const String defaultUrl =
           "https://images.pexels.com/photos/17573962/pexels-photo-17573962/free-photo-of-portrait-of-woman-holding-vinyl-record-to-her-face.jpeg?";
 
-      debugPrint("Image Exists: $imageExists");
+      // debugPrint("Image Exists: $imageExists");
 
       return Artist(
         id: uriParts.last,

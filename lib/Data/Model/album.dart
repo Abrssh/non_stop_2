@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Album {
   final String id, name, artist, smallImageUrl, largeImageUrl, spotifyUrl, date;
 
@@ -12,14 +14,17 @@ class Album {
   });
 
   factory Album.fromJson(Map<String, dynamic> json) {
+    debugPrint("Album Json: $json");
+    String uri = json['data']['uri'];
+    List<String> uriParts = uri.split(':');
     return Album(
-      id: json['id'],
-      name: json['name'],
-      artist: json['artists'][0]['name'],
-      largeImageUrl: json['images'][0]['url'],
-      smallImageUrl: json['images'][1]['url'],
-      spotifyUrl: json['external_urls']['spotify'],
-      date: json['release_date'],
+      id: uriParts.last,
+      name: json['data']['name'],
+      artist: json['data']['artists']['items'][0]['profile']['name'],
+      largeImageUrl: json['data']['coverArt']['sources'][0]['url'],
+      smallImageUrl: json['data']['coverArt']['sources'][1]['url'],
+      spotifyUrl: "https://open.spotify.com/album/${uriParts.last}",
+      date: json['data']['date']['year'].toString(),
     );
   }
 

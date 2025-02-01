@@ -65,8 +65,8 @@ class ArtistGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ArtistBloc, ArtistState>(
       listener: (context, state) {
-        debugPrint(
-            "Number of artists: ${state.artists.length} and isLoading: ${state.isLoading} and isError: ${state.isError} and errorMessage: ${state.errorMessage}");
+        // debugPrint(
+        //     "Number of artists: ${state.artists.length} and isLoading: ${state.isLoading} and isError: ${state.isError} and errorMessage: ${state.errorMessage}");
         if (state.isError && !state.isLoading) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

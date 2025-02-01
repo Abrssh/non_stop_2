@@ -17,10 +17,6 @@ class AppRouter {
   final BottomNavigationCubit _bottomNavigationCubit = BottomNavigationCubit();
   final InternetConnBloc _internetConnBloc = InternetConnBloc();
 
-  final AlbumRepository _albumRepository = AlbumRepository(
-    rapidApiDatasource: RapidApiDatasource(),
-  );
-
   Route onGenerateRoute(RouteSettings settings) {
     debugPrint("Called onGenerateRoute");
     switch (settings.name) {
@@ -39,7 +35,11 @@ class AppRouter {
                     TrackRepository(rapidApiDatasource: RapidApiDatasource()),
                 lazy: true,
               ),
-              RepositoryProvider.value(value: _albumRepository),
+              RepositoryProvider(
+                create: (context) =>
+                    AlbumRepository(rapidApiDatasource: RapidApiDatasource()),
+                lazy: true,
+              ),
               RepositoryProvider(
                 create: (context) =>
                     ArtistRepository(rapidApiDatasource: RapidApiDatasource()),

@@ -13,28 +13,33 @@ class GetAlbumsBloc extends Bloc<GetAlbumsEvent, GetAlbumsState> {
     debugPrint("GetAlbumsBloc constructor called");
     on<GetPopularAlbumsEvent>(_getAlbums);
     on<GetArtistAlbumsEvent>(_getArtistAlbums);
+    add(const GetPopularAlbumsEvent());
   }
 
   void _getAlbums(
       GetPopularAlbumsEvent event, Emitter<GetAlbumsState> emit) async {
     emit(const GetAlbumsState(isLoading: true));
     try {
+      emit(const GetAlbumsState(isLoading: true, isError: false));
       List<Album> albums = await albumsUseCase.getAlbums();
-      emit(GetAlbumsState(albumsList: albums));
+      emit(state.copyWith(albumsList: albums, isLoading: false));
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString()));
+      emit(state.copyWith(
+          errorMessage: e.toString(), isError: true, isLoading: false));
     }
   }
 
   void _getArtistAlbums(
       GetArtistAlbumsEvent event, Emitter<GetAlbumsState> emit) async {
-    emit(const GetAlbumsState(isLoading: true));
+    emit(const GetAlbumsState(isLoading: true, isError: false));
     try {
+      emit(const GetAlbumsState(isLoading: true, isError: false));
       List<Album> albums =
           await albumsUseCase.getAlbumsByArtist(event.artistId);
-      emit(GetAlbumsState(albumsList: albums));
+      emit(state.copyWith(albumsList: albums, isLoading: false));
     } catch (e) {
-      emit(state.copyWith(errorMessage: e.toString()));
+      emit(state.copyWith(
+          errorMessage: e.toString(), isError: true, isLoading: false));
     }
   }
 }

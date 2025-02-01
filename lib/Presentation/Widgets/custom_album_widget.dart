@@ -96,34 +96,7 @@ class CustomAlbumWidget extends StatelessWidget {
 }
 
 class AlbumGrid extends StatelessWidget {
-  final List<CustomAlbumWidget> albums = [
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Thriller',
-      artistName: 'Michael Jackson',
-    ),
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Back in Black',
-      artistName: 'AC/DC',
-    ),
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Dark Side of the Moon',
-      artistName: 'Pink Floyd',
-    ),
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Abbey Road',
-      artistName: 'The Beatles',
-    ),
-  ];
-
-  AlbumGrid({super.key});
+  const AlbumGrid({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -132,80 +105,50 @@ class AlbumGrid extends StatelessWidget {
         final isLandscapeOrTablet = constraints.maxWidth > 600;
         final crossAxisCount = isLandscapeOrTablet ? 4 : 2;
 
-        return BlocBuilder<GetAlbumsBloc, GetAlbumsState>(
+        return BlocConsumer<GetAlbumsBloc, GetAlbumsState>(
+          listener: (context, state) {
+            if (state.isError && !state.isLoading) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  backgroundColor: Colors.red,
+                  margin: const EdgeInsets.only(
+                    bottom: 80, // Adjust based on your bottom nav height
+                    left: 10,
+                    right: 10,
+                  ),
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(
+                    state.errorMessage,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              );
+            }
+          },
           builder: (context, state) {
-            return GridView.builder(
-              padding: const EdgeInsets.all(8.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: crossAxisCount,
-                childAspectRatio: 3 / 5,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 15.0,
-                mainAxisExtent: 180,
-              ),
-              itemCount: albums.length,
-              itemBuilder: (context, index) {
-                // return CustomAlbumWidget(
-                //   imageUrl: albums[index]['imageUrl'] ?? '',
-                //   albumName: albums[index]['albumName'] ?? '',
-                //   artistName: albums[index]['artistName'] ?? '',
-                // );
-                return albums[index];
-              },
-            );
+            return state.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : GridView.builder(
+                    padding: const EdgeInsets.all(8.0),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: crossAxisCount,
+                      childAspectRatio: 3 / 5,
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 15.0,
+                      mainAxisExtent: 180,
+                    ),
+                    itemCount: state.albumsList.length,
+                    itemBuilder: (context, index) {
+                      return CustomAlbumWidget(
+                        imageUrl: state.albumsList[index].largeImageUrl,
+                        albumName: state.albumsList[index].name,
+                        artistName: state.albumsList[index].artist,
+                      );
+                    },
+                  );
           },
         );
       },
-    );
-  }
-}
-
-class AlbumGrid2 extends StatelessWidget {
-  AlbumGrid2({super.key});
-
-  final List<CustomAlbumWidget> albums = [
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Thriller',
-      artistName: 'Michael Jackson',
-    ),
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Back in Black',
-      artistName: 'AC/DC',
-    ),
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Dark Side of the Moon',
-      artistName: 'Pink Floyd',
-    ),
-    const CustomAlbumWidget(
-      imageUrl:
-          'https://images.pexels.com/photos/6867603/pexels-photo-6867603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      albumName: 'Abbey Road',
-      artistName: 'The Beatles',
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    return Container(
-      // color: Colors.brown,
-      height: screenHeight * 0.4,
-      width: screenWidth,
-      child: GridView.extent(
-        // physics: const NeverScrollableScrollPhysics(),
-        maxCrossAxisExtent: 200,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        shrinkWrap: true,
-        children: albums,
-      ),
     );
   }
 }

@@ -1,29 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MusicCard extends StatelessWidget {
-  const MusicCard({super.key});
+  final String imageUrl;
+  const MusicCard({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
-    // return SizedBox(
-    //   width: 200,
-    //   height: 200,
-    //   child: Align(
-    //     alignment: Alignment.center,
-    //     child: Container(
-    //       decoration: BoxDecoration(
-    //           image: const DecorationImage(
-    //               image: NetworkImage(
-    //                   "https://images.pexels.com/photos/3574678/pexels-photo-3574678.jpeg?auto=compress&cs=tinysrgb&w=600"),
-    //               fit: BoxFit.cover,
-    //               alignment: Alignment.bottomLeft),
-    //           borderRadius: BorderRadius.circular(10)),
-    //       child: Center(
-    //           child: ElevatedButton(
-    //               onPressed: () {}, child: const Text("Press Me"))),
-    //     ),
-    //   ),
-    // );
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Container(
@@ -47,7 +29,7 @@ class MusicCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                "https://images.pexels.com/photos/3574678/pexels-photo-3574678.jpeg?auto=compress&cs=tinysrgb&w=600",
+                imageUrl,
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomLeft,
                 width: 210,

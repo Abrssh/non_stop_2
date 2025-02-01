@@ -6,7 +6,7 @@ class Track {
       largeImageUrl,
       date,
       externalUrl;
-  final double duration;
+  final int duration;
 
   Track(
       {required this.id,

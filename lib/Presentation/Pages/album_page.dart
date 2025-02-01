@@ -14,7 +14,8 @@ class AlbumPage extends StatelessWidget {
             Flexible(
               flex: 10,
               child: Container(
-                  color: Colors.white.withOpacity(0.05), child: AlbumGrid()),
+                  color: Colors.white.withOpacity(0.05),
+                  child: const AlbumGrid()),
             ),
             const Spacer(
               flex: 1,
