@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_stop_2/Domain/bloc/track_bloc/track_bloc.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});
@@ -56,6 +58,11 @@ class SearchWidget extends StatelessWidget {
                     fillColor: Colors.white),
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.5), fontSize: 13),
+                onSubmitted: (value) {
+                  context
+                      .read<TrackBloc>()
+                      .add(SearchTracksEvent(query: value));
+                },
               ),
             ),
           ),

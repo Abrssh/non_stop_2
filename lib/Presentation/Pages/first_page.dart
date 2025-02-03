@@ -79,6 +79,7 @@ class FirstPage extends StatelessWidget {
                         )
                       : const Center(child: CircularProgressIndicator());
                 },
+                buildWhen: (previous, current) => previous.tracks == [],
               ),
               const SizedBox(
                 height: 20,

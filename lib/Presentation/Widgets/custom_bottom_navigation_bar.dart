@@ -70,7 +70,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   BlocProvider.of<BottomNavigationCubit>(context).setIndex(1);
                 },
                 icon: Icon(
-                  Icons.search,
+                  Icons.album,
                   size: context
                               .read<BottomNavigationCubit>()
                               .state
@@ -98,7 +98,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   setState(() {});
                 },
                 icon: Icon(
-                  Icons.album,
+                  Icons.person,
                   size: context
                               .read<BottomNavigationCubit>()
                               .state
@@ -130,7 +130,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
                   context.read<BottomNavigationCubit>().setIndex(3);
                 },
                 icon: Icon(
-                  Icons.person,
+                  Icons.music_note,
                   size: state.currentIndex == 3 ? 32 : 24,
                 ),
                 color: state.currentIndex == 3 ? Colors.white : Colors.grey,

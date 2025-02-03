@@ -9,7 +9,7 @@ class RapidApiDatasource {
       {String query = "Ethiopian",
       int limit = 20,
       String type = "albums"}) async {
-    final apiKey = dotenv.env["rapid_api_key"];
+    final apiKey = dotenv.env["rapid_api_key2"];
     final String endPoint =
         "https://spotify23.p.rapidapi.com/search/?q=$query&type=$type&offset=0&limit=$limit&numberOfTopResults=20";
 

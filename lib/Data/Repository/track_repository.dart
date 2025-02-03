@@ -26,7 +26,7 @@ class TrackRepository implements GetTracksUseCase {
   Future<List<Track>> getTracks(String query) async {
     try {
       List<dynamic> fetchedTracks =
-          await rapidApiDatasource.fetchGroupData(query: query);
+          await rapidApiDatasource.fetchGroupData(query: query, type: "tracks");
       return fetchedTracks.map((track) {
         Track trackData = Track.fromJson(track);
         return trackData;

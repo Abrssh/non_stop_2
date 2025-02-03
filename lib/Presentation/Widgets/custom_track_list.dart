@@ -18,7 +18,7 @@ class CustomTrackList extends StatelessWidget {
           return CustomTrackCard(
               width: 100,
               height: 80,
-              isFavorite: index % 2 == 0,
+              isFavorite: tracks[index].id.hashCode % 2 == 0,
               imageUrl: tracks[index].smallImageUrl,
               trackName: tracks[index].name,
               artistName: tracks[index].artistName);
