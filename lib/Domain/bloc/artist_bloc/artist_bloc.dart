@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:non_stop_2/Data/Model/artist.dart';
 import 'package:non_stop_2/Domain/Interface/get_artists_usecase.dart';
 
 part 'artist_event.dart';
 part 'artist_state.dart';
 
-class ArtistBloc extends Bloc<GetArtistsEvent, ArtistState> {
+class ArtistBloc extends HydratedBloc<GetArtistsEvent, ArtistState> {
   final GetArtistsUseCase getArtistsUseCase;
   ArtistBloc({required this.getArtistsUseCase}) : super(const ArtistState()) {
     debugPrint("ArtistBloc constructor called");
@@ -30,6 +30,26 @@ class ArtistBloc extends Bloc<GetArtistsEvent, ArtistState> {
       debugPrint("_OnGetArtists Error: $e");
       emit(state.copyWith(
           isLoading: false, isError: true, errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  ArtistState? fromJson(Map<String, dynamic> json) {
+    try {
+      return ArtistState.fromJson(json);
+    } catch (e) {
+      debugPrint("Error in Artist fromJson: $e");
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(ArtistState state) {
+    try {
+      return state.toJson();
+    } catch (e) {
+      debugPrint("Error in Artist toJson: $e");
+      return null;
     }
   }
 }

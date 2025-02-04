@@ -28,13 +28,38 @@ class Album {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'artist': artist,
-        'smallImageUrl': smallImageUrl,
-        'largeImageUrl': largeImageUrl,
-        'spotifyUrl': spotifyUrl,
-        'date': date,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'artist': artist,
+      'smallImageUrl': smallImageUrl,
+      'largeImageUrl': largeImageUrl,
+      'spotifyUrl': spotifyUrl,
+      'date': date,
+    };
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'artist': artist,
+      'smallImageUrl': smallImageUrl,
+      'largeImageUrl': largeImageUrl,
+      'spotifyUrl': spotifyUrl,
+      'date': date,
+    };
+  }
+
+  factory Album.fromMap(Map<String, dynamic> map) {
+    return Album(
+        id: map['id'],
+        name: map['name'],
+        artist: map['artist'],
+        smallImageUrl: map['smallImageUrl'],
+        largeImageUrl: map['largeImageUrl'],
+        spotifyUrl: map['spotifyUrl'],
+        date: map['date']);
+  }
 }

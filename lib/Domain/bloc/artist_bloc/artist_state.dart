@@ -29,6 +29,27 @@ final class ArtistState extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'artists': artists.map((artist) => artist.toMap()).toList(),
+      'isLoading': isLoading,
+      'isError': isError,
+      'errorMessage': errorMessage,
+      'isIntial': isIntial,
+    };
+  }
+
+  factory ArtistState.fromJson(Map<String, dynamic> map) {
+    return ArtistState(
+      artists: List<Artist>.from(
+          map['artists']?.map((x) => Artist.fromMap(x)) ?? []),
+      isLoading: map['isLoading'] ?? false,
+      isError: map['isError'] ?? false,
+      errorMessage: map['errorMessage'] ?? '',
+      isIntial: map['isIntial'] ?? true,
+    );
+  }
+
   @override
   List<Object> get props =>
       [artists, isLoading, isError, errorMessage, isIntial];

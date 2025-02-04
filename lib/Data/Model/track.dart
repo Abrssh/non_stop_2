@@ -44,4 +44,30 @@ class Track {
       'date': date,
     };
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'artistName': artistName,
+      'smallImageUrl': smallImageUrl,
+      'largeImageUrl': largeImageUrl,
+      'external_url': externalUrl,
+      'duration': duration,
+      'date': date,
+    };
+  }
+
+  factory Track.fromMap(Map<String, dynamic> map) {
+    return Track(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      artistName: map['artistName'] as String,
+      smallImageUrl: map['smallImageUrl'] as String,
+      largeImageUrl: map['largeImageUrl'] as String,
+      externalUrl: map['external_url'] as String,
+      duration: map['duration'] as int,
+      date: map['date'] as String,
+    );
+  }
 }

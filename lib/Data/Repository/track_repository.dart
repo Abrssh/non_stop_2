@@ -1,11 +1,14 @@
+import 'package:non_stop_2/Data/API/local_storage_datasource.dart';
 import 'package:non_stop_2/Data/API/rapid_api_datasource.dart';
 import 'package:non_stop_2/Data/Model/track.dart';
 import 'package:non_stop_2/Domain/Interface/get_tracks_usecase.dart';
 
 class TrackRepository implements GetTracksUseCase {
   final RapidApiDatasource rapidApiDatasource;
+  final LocalStorageDataSource localStorageDataSource;
 
-  TrackRepository({required this.rapidApiDatasource});
+  TrackRepository(
+      {required this.rapidApiDatasource, required this.localStorageDataSource});
 
   @override
   Future<List<Track>> getTopTracks() async {

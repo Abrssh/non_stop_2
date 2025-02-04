@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:non_stop_2/Data/Model/album.dart';
 import 'package:non_stop_2/Domain/Interface/get_albums_usecase.dart';
 
 part 'get_albums_event.dart';
 part 'get_albums_state.dart';
 
-class GetAlbumsBloc extends Bloc<GetAlbumsEvent, GetAlbumsState> {
+class GetAlbumsBloc extends HydratedBloc<GetAlbumsEvent, GetAlbumsState> {
   final GetAlbumsUseCase albumsUseCase;
   GetAlbumsBloc({required this.albumsUseCase}) : super(const GetAlbumsState()) {
     debugPrint("GetAlbumsBloc constructor called");
@@ -18,7 +19,6 @@ class GetAlbumsBloc extends Bloc<GetAlbumsEvent, GetAlbumsState> {
 
   void _getAlbums(
       GetPopularAlbumsEvent event, Emitter<GetAlbumsState> emit) async {
-    emit(const GetAlbumsState(isLoading: true));
     try {
       emit(const GetAlbumsState(isLoading: true, isError: false));
       List<Album> albums = await albumsUseCase.getAlbums();
@@ -31,15 +31,34 @@ class GetAlbumsBloc extends Bloc<GetAlbumsEvent, GetAlbumsState> {
 
   void _getArtistAlbums(
       GetArtistAlbumsEvent event, Emitter<GetAlbumsState> emit) async {
-    emit(const GetAlbumsState(isLoading: true, isError: false));
     try {
       emit(const GetAlbumsState(isLoading: true, isError: false));
       List<Album> albums =
           await albumsUseCase.getAlbumsByArtist(event.artistId);
-      emit(state.copyWith(albumsList: albums, isLoading: false));
+      emit(state.copyWith(artistAlbums: albums, isLoading: false));
     } catch (e) {
       emit(state.copyWith(
           errorMessage: e.toString(), isError: true, isLoading: false));
+    }
+  }
+
+  @override
+  GetAlbumsState? fromJson(Map<String, dynamic> json) {
+    try {
+      return GetAlbumsState.fromJson(json);
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(GetAlbumsState state) {
+    try {
+      return state.toJson();
+    } catch (e) {
+      debugPrint(e.toString());
+      return null;
     }
   }
 }

@@ -2,35 +2,41 @@ part of 'track_bloc.dart';
 
 sealed class TrackState extends Equatable {
   final List<Track> tracks;
+  final List<Track> albumTracks;
   final bool isLoading;
   final bool isError;
   final String errorMessage;
 
   const TrackState(
       {this.tracks = const [],
+      this.albumTracks = const [],
       this.isLoading = false,
       this.errorMessage = "",
       this.isError = false});
 
   TrackState copyWith({
     List<Track>? tracks,
+    List<Track>? albumTracks,
     bool? isLoading,
     bool? isError,
     String? errorMessage,
   });
 
   @override
-  List<Object> get props => [tracks, isLoading, isError, errorMessage];
+  List<Object> get props =>
+      [tracks, albumTracks, isLoading, isError, errorMessage];
 }
 
 final class SearchedTracksState extends TrackState {
   const SearchedTracksState(
       {List<Track> tracks = const [],
+      List<Track> albumTracks = const [],
       bool isLoading = false,
       String errorMessage = "",
       bool isError = false})
       : super(
             tracks: tracks,
+            albumTracks: albumTracks,
             isLoading: isLoading,
             errorMessage: errorMessage,
             isError: isError);
@@ -38,39 +44,66 @@ final class SearchedTracksState extends TrackState {
   @override
   TrackState copyWith(
       {List<Track>? tracks,
+      List<Track>? albumTracks,
       bool? isLoading,
       bool? isError,
       String? errorMessage}) {
     return SearchedTracksState(
         tracks: tracks ?? this.tracks,
+        albumTracks: albumTracks ?? this.albumTracks,
         isLoading: isLoading ?? this.isLoading,
         errorMessage: errorMessage ?? this.errorMessage,
         isError: isError ?? this.isError);
   }
-}
 
-final class AlbumTracksState extends TrackState {
-  const AlbumTracksState(
-      {List<Track> tracks = const [],
-      bool isLoading = false,
-      String errorMessage = "",
-      bool isError = false})
-      : super(
-            tracks: tracks,
-            isLoading: isLoading,
-            errorMessage: errorMessage,
-            isError: isError);
+  Map<String, dynamic> toJson() {
+    return {
+      'tracks': tracks.map((track) => track.toMap()).toList(),
+      'albumTracks': albumTracks.map((track) => track.toMap()).toList(),
+      'isLoading': isLoading,
+      'errorMessage': errorMessage,
+      'isError': isError,
+    };
+  }
 
-  @override
-  TrackState copyWith(
-      {List<Track>? tracks,
-      bool? isLoading,
-      bool? isError,
-      String? errorMessage}) {
-    return AlbumTracksState(
-        tracks: tracks ?? this.tracks,
-        isLoading: isLoading ?? this.isLoading,
-        errorMessage: errorMessage ?? this.errorMessage,
-        isError: isError ?? this.isError);
+  factory SearchedTracksState.fromJson(Map<String, dynamic> map) {
+    return SearchedTracksState(
+      tracks:
+          List<Track>.from(map['tracks']?.map((x) => Track.fromMap(x)) ?? []),
+      albumTracks: List<Track>.from(
+          map['albumTracks']?.map((x) => Track.fromMap(x)) ?? []),
+      isLoading: map['isLoading'] ?? false,
+      errorMessage: map['errorMessage'] ?? '',
+      isError: map['isError'] ?? false,
+    );
   }
 }
+
+// final class AlbumTracksState extends TrackState {
+//   const AlbumTracksState(
+//       {List<Track> tracks = const [],
+//       List<Track> albumTracks = const [],
+//       bool isLoading = false,
+//       String errorMessage = "",
+//       bool isError = false})
+//       : super(
+//             tracks: tracks,
+//             isLoading: isLoading,
+//             errorMessage: errorMessage,
+//             isError: isError);
+
+//   @override
+//   TrackState copyWith(
+//       {List<Track>? tracks,
+//       List<Track>? albumTracks,
+//       bool? isLoading,
+//       bool? isError,
+//       String? errorMessage}) {
+//     return AlbumTracksState(
+//         tracks: tracks ?? this.tracks,
+//         albumTracks: albumTracks ?? this.albumTracks,
+//         isLoading: isLoading ?? this.isLoading,
+//         errorMessage: errorMessage ?? this.errorMessage,
+//         isError: isError ?? this.isError);
+//   }
+// }

@@ -70,4 +70,24 @@ class Artist {
       // 'popularity': popularity,
     };
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'smallImageUrl': smallImageUrl,
+      'largeImageUrl': largeImageUrl,
+      // 'popularity': popularity,
+    };
+  }
+
+  factory Artist.fromMap(Map<String, dynamic> map) {
+    return Artist(
+      id: map['id'],
+      name: map['name'],
+      smallImageUrl: map['smallImageUrl'],
+      largeImageUrl: map['largeImageUrl'],
+      // popularity: map['popularity'],
+    );
+  }
 }

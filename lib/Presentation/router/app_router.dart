@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_stop_2/Data/API/local_storage_datasource.dart';
 import 'package:non_stop_2/Data/API/rapid_api_datasource.dart';
 import 'package:non_stop_2/Data/Repository/album_repository.dart';
 import 'package:non_stop_2/Data/Repository/artist_repository.dart';
@@ -12,10 +13,16 @@ import 'package:non_stop_2/Domain/bloc/track_bloc/track_bloc.dart';
 import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
 import 'package:non_stop_2/Presentation/Pages/home_pages.dart';
 import 'package:non_stop_2/Presentation/Pages/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppRouter {
   final BottomNavigationCubit _bottomNavigationCubit = BottomNavigationCubit();
   final InternetConnBloc _internetConnBloc = InternetConnBloc();
+  late final SharedPreferences _sharedPreferences;
+
+  AppRouter() {
+    _sharedPreferences = SharedPreferences.getInstance() as SharedPreferences;
+  }
 
   Route onGenerateRoute(RouteSettings settings) {
     debugPrint("Called onGenerateRoute");
@@ -31,8 +38,10 @@ class AppRouter {
           builder: (context) => MultiRepositoryProvider(
             providers: [
               RepositoryProvider(
-                create: (context) =>
-                    TrackRepository(rapidApiDatasource: RapidApiDatasource()),
+                create: (context) => TrackRepository(
+                    rapidApiDatasource: RapidApiDatasource(),
+                    localStorageDataSource:
+                        LocalStorageDataSource(prefs: _sharedPreferences)),
                 lazy: true,
               ),
               RepositoryProvider(

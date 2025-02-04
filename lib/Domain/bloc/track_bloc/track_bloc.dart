@@ -1,12 +1,13 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:non_stop_2/Data/Model/track.dart';
 import 'package:non_stop_2/Domain/Interface/get_tracks_usecase.dart';
 
 part 'track_event.dart';
 part 'track_state.dart';
 
-class TrackBloc extends Bloc<TrackEvent, TrackState> {
+class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   final GetTracksUseCase getTracksUseCase;
 
   TrackBloc({required this.getTracksUseCase})
@@ -23,7 +24,7 @@ class TrackBloc extends Bloc<TrackEvent, TrackState> {
       emit(state.copyWith(isLoading: true, isError: false));
       List<Track> tracks =
           await getTracksUseCase.getTracksByAlbum(event.albumId);
-      emit(state.copyWith(tracks: tracks, isLoading: false));
+      emit(state.copyWith(albumTracks: tracks, isLoading: false));
     } catch (e) {
       emit(state.copyWith(
           errorMessage: e.toString(), isError: true, isLoading: false));
@@ -51,6 +52,29 @@ class TrackBloc extends Bloc<TrackEvent, TrackState> {
     } catch (e) {
       emit(state.copyWith(
           errorMessage: e.toString(), isError: true, isLoading: false));
+    }
+  }
+
+  @override
+  SearchedTracksState? fromJson(Map<String, dynamic> json) {
+    try {
+      return SearchedTracksState.fromJson(json);
+    } catch (e) {
+      debugPrint('Error deserializing state: $e');
+      return null;
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(TrackState state) {
+    try {
+      if (state is SearchedTracksState) {
+        return state.toJson();
+      }
+      return null;
+    } catch (e) {
+      debugPrint('Error serializing state: $e');
+      return null;
     }
   }
 }
