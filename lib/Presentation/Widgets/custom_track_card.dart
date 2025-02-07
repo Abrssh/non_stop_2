@@ -48,8 +48,8 @@ class CustomTrackCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    trackName.length > 17
-                        ? '${trackName.substring(0, 14)}...'
+                    trackName.length > 15
+                        ? '${trackName.substring(0, 12)}...'
                         : trackName,
                     style: Theme.of(context)
                         .textTheme
@@ -67,8 +67,8 @@ class CustomTrackCard extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        artistName.length > 17
-                            ? '${artistName.substring(0, 14)}...'
+                        artistName.length > 15
+                            ? '${artistName.substring(0, 12)}...'
                             : artistName,
                         style: Theme.of(context)
                             .textTheme

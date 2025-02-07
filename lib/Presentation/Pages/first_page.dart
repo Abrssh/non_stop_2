@@ -44,6 +44,8 @@ class FirstPage extends StatelessWidget {
               ),
               BlocConsumer<TrackBloc, TrackState>(
                 listener: (context, state) {
+                  debugPrint(
+                      "State isIntial: ${state.isIntial} and isLoading: ${state.isLoading} and tracks: ${state.tracks.length}");
                   if (state.isError && !state.isLoading) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -63,6 +65,8 @@ class FirstPage extends StatelessWidget {
                   }
                 },
                 builder: (context, state) {
+                  debugPrint(
+                      "Number of tracks: ${state.tracks.length} isIntial: ${state.isIntial} and isLoading: ${state.isLoading}");
                   return !state.isLoading
                       ? SizedBox(
                           height: 160,
@@ -79,7 +83,7 @@ class FirstPage extends StatelessWidget {
                         )
                       : const Center(child: CircularProgressIndicator());
                 },
-                buildWhen: (previous, current) => previous.tracks == [],
+                // buildWhen: (previous, current) => current.isIntial,
               ),
               const SizedBox(
                 height: 20,

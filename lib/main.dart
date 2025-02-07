@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:non_stop_2/Presentation/router/app_router.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,19 +12,30 @@ void main() async {
       storageDirectory: kIsWeb
           ? HydratedStorageDirectory.web
           : HydratedStorageDirectory((await getTemporaryDirectory()).path));
+  // await HydratedBloc.storage.clear();
+
   await dotenv.load(fileName: "assets/api_key.env");
-  runApp(const MyApp());
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  runApp(MyApp(sharedPreferences: sharedPreferences));
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final SharedPreferences sharedPreferences;
+  const MyApp({super.key, required this.sharedPreferences});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final AppRouter _appRouter = AppRouter();
+  late final AppRouter _appRouter;
+
+  @override
+  void initState() {
+    super.initState();
+    _appRouter = AppRouter(sharedPreferences: widget.sharedPreferences);
+  }
 
   // This widget is the root of your application.
   @override

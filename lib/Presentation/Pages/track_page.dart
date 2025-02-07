@@ -30,7 +30,10 @@ class TrackPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        return CustomTrackList(height: height, tracks: state.tracks);
+        debugPrint("Number of tracks: ${state.tracks.length}");
+        return state.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : CustomTrackList(height: height, tracks: state.tracks);
       },
     );
   }

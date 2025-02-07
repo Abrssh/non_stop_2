@@ -14,7 +14,8 @@ class ArtistPage extends StatelessWidget {
             Flexible(
               flex: 10,
               child: Container(
-                  color: Colors.white.withOpacity(0.05),
+                  color: Colors.white.withValues(alpha: 240),
+                  // color: Colors.white.withAlpha(100),
                   child: const ArtistGrid()),
             ),
             const Spacer(

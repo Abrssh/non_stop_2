@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class RapidApiDatasource {
   Future<List<dynamic>> fetchGroupData(
       {String query = "Ethiopian",
-      int limit = 20,
+      int limit = 60,
       String type = "albums"}) async {
     final apiKey = dotenv.env["rapid_api_key2"];
     final String endPoint =

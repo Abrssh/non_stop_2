@@ -46,9 +46,10 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   Future<void> _onGetTopTracks(
       GetTopTracksEvent event, Emitter<TrackState> emit) async {
     try {
-      emit(state.copyWith(isLoading: true, isError: false));
+      emit(state.copyWith(isLoading: true, isError: false, isIntial: true));
       List<Track> tracks = await getTracksUseCase.getTopTracks();
-      emit(state.copyWith(tracks: tracks, isLoading: false));
+      emit(state.copyWith(tracks: tracks, isLoading: false, isIntial: true));
+      emit(state.copyWith(isIntial: false));
     } catch (e) {
       emit(state.copyWith(
           errorMessage: e.toString(), isError: true, isLoading: false));
@@ -58,6 +59,7 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   @override
   SearchedTracksState? fromJson(Map<String, dynamic> json) {
     try {
+      debugPrint("Retrieving state from JSON: ${json.entries.first.value}");
       return SearchedTracksState.fromJson(json);
     } catch (e) {
       debugPrint('Error deserializing state: $e');
@@ -68,6 +70,7 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   @override
   Map<String, dynamic>? toJson(TrackState state) {
     try {
+      debugPrint('Saving state: ${state.isIntial} ');
       if (state is SearchedTracksState) {
         return state.toJson();
       }

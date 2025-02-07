@@ -24,7 +24,7 @@ class _CustomGenreSelectorState extends State<CustomGenreSelector> {
               selectedIndex = 0;
               context
                   .read<TrackBloc>()
-                  .add(const SearchTracksEvent(query: "Trending Right Now"));
+                  .add(const SearchTracksEvent(query: "Best Ethiopian Songs"));
             }),
             style: selectedIndex == 0
                 ? ButtonStyle(

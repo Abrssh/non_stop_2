@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:non_stop_2/Data/API/local_storage_datasource.dart';
+import 'package:non_stop_2/Data/API/album_local_storage_datasource.dart';
+import 'package:non_stop_2/Data/API/artist_local_storage_datasource.dart';
+import 'package:non_stop_2/Data/API/track_local_storage_datasource.dart';
 import 'package:non_stop_2/Data/API/rapid_api_datasource.dart';
 import 'package:non_stop_2/Data/Repository/album_repository.dart';
 import 'package:non_stop_2/Data/Repository/artist_repository.dart';
@@ -18,11 +20,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppRouter {
   final BottomNavigationCubit _bottomNavigationCubit = BottomNavigationCubit();
   final InternetConnBloc _internetConnBloc = InternetConnBloc();
-  late final SharedPreferences _sharedPreferences;
+  final SharedPreferences sharedPreferences;
 
-  AppRouter() {
-    _sharedPreferences = SharedPreferences.getInstance() as SharedPreferences;
-  }
+  AppRouter({required this.sharedPreferences});
 
   Route onGenerateRoute(RouteSettings settings) {
     debugPrint("Called onGenerateRoute");
@@ -40,18 +40,22 @@ class AppRouter {
               RepositoryProvider(
                 create: (context) => TrackRepository(
                     rapidApiDatasource: RapidApiDatasource(),
-                    localStorageDataSource:
-                        LocalStorageDataSource(prefs: _sharedPreferences)),
+                    trackLocalStorageDataSource:
+                        TrackLocalStorageDataSource(prefs: sharedPreferences)),
                 lazy: true,
               ),
               RepositoryProvider(
-                create: (context) =>
-                    AlbumRepository(rapidApiDatasource: RapidApiDatasource()),
+                create: (context) => AlbumRepository(
+                    rapidApiDatasource: RapidApiDatasource(),
+                    albumLocalStorageDatasource:
+                        AlbumLocalStorageDatasource(prefs: sharedPreferences)),
                 lazy: true,
               ),
               RepositoryProvider(
-                create: (context) =>
-                    ArtistRepository(rapidApiDatasource: RapidApiDatasource()),
+                create: (context) => ArtistRepository(
+                    rapidApiDatasource: RapidApiDatasource(),
+                    artistLocalStorageDatasource:
+                        ArtistLocalStorageDatasource(prefs: sharedPreferences)),
                 lazy: true,
               ),
             ],
