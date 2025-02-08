@@ -44,8 +44,8 @@ class FirstPage extends StatelessWidget {
               ),
               BlocConsumer<TrackBloc, TrackState>(
                 listener: (context, state) {
-                  debugPrint(
-                      "State isIntial: ${state.isIntial} and isLoading: ${state.isLoading} and tracks: ${state.tracks.length}");
+                  // debugPrint(
+                  //     "FirstPage Listen isIntial: ${state.isIntial} and isLoading: ${state.isLoading} and tracks: ${state.tracks.length} error: ${state.errorMessage}");
                   if (state.isError && !state.isLoading) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -65,25 +65,29 @@ class FirstPage extends StatelessWidget {
                   }
                 },
                 builder: (context, state) {
-                  debugPrint(
-                      "Number of tracks: ${state.tracks.length} isIntial: ${state.isIntial} and isLoading: ${state.isLoading}");
+                  // debugPrint(
+                  //     "Number of tracks: ${state.tracks.length} isIntial: ${state.isIntial} and isLoading: ${state.isLoading} error: ${state.errorMessage}");
                   return !state.isLoading
                       ? SizedBox(
                           height: 160,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: state.tracks.length,
+                            itemCount: state.topTracks.length,
                             itemBuilder: (_, index) {
                               return MusicCard(
-                                imageUrl: state.tracks[index].largeImageUrl,
+                                imageUrl: state.topTracks[index].largeImageUrl,
                               );
                             },
                           ),
                         )
-                      : const Center(child: CircularProgressIndicator());
+                      : SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.35,
+                          child:
+                              const Center(child: CircularProgressIndicator()));
                 },
-                // buildWhen: (previous, current) => current.isIntial,
+                buildWhen: (previous, current) =>
+                    previous.topTracks != current.topTracks,
               ),
               const SizedBox(
                 height: 20,

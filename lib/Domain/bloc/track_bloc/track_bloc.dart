@@ -28,6 +28,7 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
     } catch (e) {
       emit(state.copyWith(
           errorMessage: e.toString(), isError: true, isLoading: false));
+      debugPrint("Error getting tracks by album. ${state.isError}");
     }
   }
 
@@ -46,10 +47,18 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   Future<void> _onGetTopTracks(
       GetTopTracksEvent event, Emitter<TrackState> emit) async {
     try {
+      debugPrint("Getting top tracks");
       emit(state.copyWith(isLoading: true, isError: false, isIntial: true));
       List<Track> tracks = await getTracksUseCase.getTopTracks();
-      emit(state.copyWith(tracks: tracks, isLoading: false, isIntial: true));
+      emit(state.copyWith(
+          tracks: tracks,
+          topTracks: tracks,
+          isLoading: false,
+          isIntial: true,
+          errorMessage: ''));
       emit(state.copyWith(isIntial: false));
+      // emit(state.copyWith(
+      //     isIntial: false, errorMessage: Random().nextInt(100).toString()));
     } catch (e) {
       emit(state.copyWith(
           errorMessage: e.toString(), isError: true, isLoading: false));
@@ -59,7 +68,7 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   @override
   SearchedTracksState? fromJson(Map<String, dynamic> json) {
     try {
-      debugPrint("Retrieving state from JSON: ${json.entries.first.value}");
+      debugPrint("Retrieving state from JSON: ${json["errorMessage"]}");
       return SearchedTracksState.fromJson(json);
     } catch (e) {
       debugPrint('Error deserializing state: $e');
@@ -70,7 +79,8 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   @override
   Map<String, dynamic>? toJson(TrackState state) {
     try {
-      debugPrint('Saving state: ${state.isIntial} ');
+      debugPrint(
+          'Saving state: ${state.isIntial} Test Message: ${state.errorMessage}');
       if (state is SearchedTracksState) {
         return state.toJson();
       }

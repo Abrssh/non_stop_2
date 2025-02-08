@@ -40,7 +40,7 @@ class CustomTrackCard extends StatelessWidget {
           ),
           const Spacer(flex: 2),
           Expanded(
-            flex: 50,
+            flex: 60,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -48,8 +48,8 @@ class CustomTrackCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    trackName.length > 15
-                        ? '${trackName.substring(0, 12)}...'
+                    trackName.length > 18
+                        ? '${trackName.substring(0, 15)}...'
                         : trackName,
                     style: Theme.of(context)
                         .textTheme
@@ -67,8 +67,8 @@ class CustomTrackCard extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        artistName.length > 15
-                            ? '${artistName.substring(0, 12)}...'
+                        artistName.length > 16
+                            ? '${artistName.substring(0, 13)}...'
                             : artistName,
                         style: Theme.of(context)
                             .textTheme

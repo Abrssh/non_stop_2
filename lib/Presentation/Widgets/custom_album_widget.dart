@@ -1,95 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:non_stop_2/Domain/bloc/album_bloc/get_albums_bloc.dart';
+import 'package:non_stop_2/Domain/bloc/track_bloc/track_bloc.dart';
 
 class CustomAlbumWidget extends StatelessWidget {
   final String albumName;
   final String artistName;
+  final String albumId;
   final String imageUrl;
+  final String releaseDate;
 
-  const CustomAlbumWidget({
-    Key? key,
-    required this.albumName,
-    required this.artistName,
-    required this.imageUrl,
-  }) : super(key: key);
+  const CustomAlbumWidget(
+      {Key? key,
+      required this.albumName,
+      required this.artistName,
+      required this.albumId,
+      required this.imageUrl,
+      required this.releaseDate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(4.0),
-      // decoration: BoxDecoration(
-      //   border: Border.all(
-      //     color: Colors.grey.shade300,
-      //     width: 1.0,
-      //   ),
-      //   color: Colors.deepPurple,
-      //   borderRadius: BorderRadius.circular(12),
-      // ),
-      // margin: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            flex: 140,
-            child: Card(
-              elevation: 4,
-              child: ClipRRect(
-                // clipBehavior: Clip.hardEdge,
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  imageUrl,
-                  // height: 170,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
-                  alignment: Alignment.topCenter,
+    return InkWell(
+      onTap: () {
+        context.read<TrackBloc>().add(GetTracksByAlbumEvent(albumId: albumId));
+        Navigator.pushNamed(context, "/album-tracks", arguments: {
+          "name": albumName,
+          "largeImageUrl": imageUrl,
+          "artist": artistName,
+          "releaseDate": releaseDate,
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.all(4.0),
+        // decoration: BoxDecoration(
+        //   border: Border.all(
+        //     color: Colors.grey.shade300,
+        //     width: 1.0,
+        //   ),
+        //   color: Colors.deepPurple,
+        //   borderRadius: BorderRadius.circular(12),
+        // ),
+        // margin: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 140,
+              child: Card(
+                elevation: 4,
+                child: ClipRRect(
+                  // clipBehavior: Clip.hardEdge,
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    imageUrl,
+                    // height: 170,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    alignment: Alignment.topCenter,
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 20,
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  albumName.length > 20
-                      ? '${albumName.substring(0, 17)}...'
-                      : albumName,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
+            Expanded(
+              flex: 20,
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 5,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.visible,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 20,
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  artistName.length > 20
-                      ? '${artistName.substring(0, 17)}...'
-                      : artistName,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
+                  Text(
+                    albumName.length > 20
+                        ? '${albumName.substring(0, 17)}...'
+                        : albumName,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.visible,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.visible,
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 20,
+              child: Row(
+                children: [
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    artistName.length > 20
+                        ? '${artistName.substring(0, 17)}...'
+                        : artistName,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.visible,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -143,6 +159,8 @@ class AlbumGrid extends StatelessWidget {
                         imageUrl: state.albumsList[index].largeImageUrl,
                         albumName: state.albumsList[index].name,
                         artistName: state.albumsList[index].artist,
+                        releaseDate: state.albumsList[index].date,
+                        albumId: state.albumsList[index].id,
                       );
                     },
                   );

@@ -13,6 +13,7 @@ import 'package:non_stop_2/Domain/bloc/internet_bloc/internet_conn_bloc.dart';
 import 'package:non_stop_2/Domain/bloc/track_bloc/track_bloc.dart';
 
 import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
+import 'package:non_stop_2/Presentation/Pages/album_tracks_page.dart';
 import 'package:non_stop_2/Presentation/Pages/home_pages.dart';
 import 'package:non_stop_2/Presentation/Pages/splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,8 +22,16 @@ class AppRouter {
   final BottomNavigationCubit _bottomNavigationCubit = BottomNavigationCubit();
   final InternetConnBloc _internetConnBloc = InternetConnBloc();
   final SharedPreferences sharedPreferences;
+  final TrackBloc _trackBloc;
 
-  AppRouter({required this.sharedPreferences});
+  AppRouter({required this.sharedPreferences})
+      : _trackBloc = TrackBloc(
+          getTracksUseCase: TrackRepository(
+            rapidApiDatasource: RapidApiDatasource(),
+            trackLocalStorageDataSource:
+                TrackLocalStorageDataSource(prefs: sharedPreferences),
+          ),
+        );
 
   Route onGenerateRoute(RouteSettings settings) {
     debugPrint("Called onGenerateRoute");
@@ -38,13 +47,6 @@ class AppRouter {
           builder: (context) => MultiRepositoryProvider(
             providers: [
               RepositoryProvider(
-                create: (context) => TrackRepository(
-                    rapidApiDatasource: RapidApiDatasource(),
-                    trackLocalStorageDataSource:
-                        TrackLocalStorageDataSource(prefs: sharedPreferences)),
-                lazy: true,
-              ),
-              RepositoryProvider(
                 create: (context) => AlbumRepository(
                     rapidApiDatasource: RapidApiDatasource(),
                     albumLocalStorageDatasource:
@@ -59,32 +61,41 @@ class AppRouter {
                 lazy: true,
               ),
             ],
-            child: Builder(builder: (context) {
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider.value(value: _bottomNavigationCubit),
-                  BlocProvider.value(value: _internetConnBloc),
-                  BlocProvider(
-                    lazy: true,
-                    create: (context) => TrackBloc(
-                      getTracksUseCase: context.read<TrackRepository>(),
-                    ),
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider.value(value: _bottomNavigationCubit),
+                BlocProvider.value(value: _internetConnBloc),
+                // BlocProvider.value(value: _trackBloc),
+                BlocProvider.value(value: _trackBloc),
+                BlocProvider(
+                  lazy: true,
+                  create: (context) => GetAlbumsBloc(
+                    albumsUseCase: context.read<AlbumRepository>(),
                   ),
-                  BlocProvider(
-                    lazy: true,
-                    create: (context) => GetAlbumsBloc(
-                      albumsUseCase: context.read<AlbumRepository>(),
-                    ),
-                  ),
-                  BlocProvider(
-                    lazy: true,
-                    create: (context) => ArtistBloc(
-                        getArtistsUseCase: context.read<ArtistRepository>()),
-                  ),
-                ],
-                child: const MyHomePage(),
-              );
-            }),
+                ),
+                BlocProvider(
+                  lazy: true,
+                  create: (context) => ArtistBloc(
+                      getArtistsUseCase: context.read<ArtistRepository>()),
+                ),
+              ],
+              child: const MyHomePage(),
+            ),
+          ),
+        );
+      case '/album-tracks':
+        final args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: _trackBloc),
+            ],
+            child: AlbumTracksPage(
+              name: args['name'],
+              largeImageUrl: args['largeImageUrl'],
+              artist: args['artist'],
+              releaseDate: args['releaseDate'],
+            ),
           ),
         );
       default:
