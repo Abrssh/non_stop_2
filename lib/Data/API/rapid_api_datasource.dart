@@ -40,7 +40,7 @@ class RapidApiDatasource {
   }
 
   Future<List<dynamic>> fetchArtistAlbums(String artistId) async {
-    final apiKey = dotenv.env["rapid_api_key"];
+    final apiKey = dotenv.env["rapid_api_key2"];
     final String endPoint =
         "https://spotify23.p.rapidapi.com/artist_albums/?id=$artistId&offset=0&limit=300";
 
@@ -70,7 +70,7 @@ class RapidApiDatasource {
   }
 
   Future<List<dynamic>> fetchAlbumTracks(String albumId) async {
-    final apiKey = dotenv.env["rapid_api_key"];
+    final apiKey = dotenv.env["rapid_api_key2"];
     final String endPoint =
         "https://spotify23.p.rapidapi.com/album_tracks/?id=$albumId&offset=0&limit=300";
 

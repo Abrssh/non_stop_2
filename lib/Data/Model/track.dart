@@ -32,6 +32,19 @@ class Track {
         date: "Unknown");
   }
 
+  factory Track.fromJsonAlbumTracks(Map<String, dynamic> json) {
+    return Track(
+        id: json['uid'],
+        name: json['track']['name'],
+        artistName: json['track']['artists']['items'][0]['profile']['name'],
+        // Use Album Cover Art
+        smallImageUrl: "",
+        largeImageUrl: "",
+        externalUrl: "https://open.spotify.com/track/${json['uid']}",
+        duration: json['track']['duration']['totalMilliseconds'],
+        date: "Unknown");
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

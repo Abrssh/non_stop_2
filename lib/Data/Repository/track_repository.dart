@@ -80,16 +80,16 @@ class TrackRepository implements GetTracksUseCase {
       List<Track> cachedTracks =
           await trackLocalStorageDataSource.getAlbumTracksFromCache(albumId);
       if (cachedTracks.isNotEmpty) {
-        debugPrint("Tracks found in cache");
+        debugPrint("Album Tracks found in cache");
         return cachedTracks;
       }
       List<dynamic> fetchedTracks =
           await rapidApiDatasource.fetchAlbumTracks(albumId);
       List<Track> tracks = fetchedTracks.map((track) {
-        Track trackData = Track.fromJson(track);
+        Track trackData = Track.fromJsonAlbumTracks(track);
         return trackData;
       }).toList();
-      await trackLocalStorageDataSource.cacheTracks(albumId, tracks);
+      await trackLocalStorageDataSource.cacheAlbumTracks(albumId, tracks);
       return tracks;
     } catch (e) {
       throw Exception(
