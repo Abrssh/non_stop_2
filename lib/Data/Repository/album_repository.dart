@@ -51,12 +51,13 @@ class AlbumRepository implements GetAlbumsUseCase {
       List<dynamic> fetchedAlbums =
           await rapidApiDatasource.fetchArtistAlbums(artistId);
       List<Album> albums = fetchedAlbums.map((album) {
-        Album albumData = Album.fromJson(album);
+        Album albumData = Album.fromJsonArtistAlbums(album);
         return albumData;
       }).toList();
       await albumLocalStorageDatasource.cacheArtistAlbums(artistId, albums);
       return albums;
     } catch (e) {
+      debugPrint("Error occurred in getAlbumsByArtist funciton: $e");
       throw Exception(
           "An Error occurred while processing album data. Error Info: $e");
     }

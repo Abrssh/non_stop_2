@@ -6,19 +6,16 @@ class ArtistPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return const Align(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
             Flexible(
               flex: 10,
-              child: Container(
-                  color: Colors.white.withValues(alpha: 240),
-                  // color: Colors.white.withAlpha(100),
-                  child: const ArtistGrid()),
+              child: ArtistGrid(),
             ),
-            const Spacer(
+            Spacer(
               flex: 1,
             ),
           ],

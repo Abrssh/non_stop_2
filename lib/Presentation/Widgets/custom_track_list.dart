@@ -5,8 +5,12 @@ import 'package:non_stop_2/Presentation/Widgets/custom_track_card.dart';
 class CustomTrackList extends StatelessWidget {
   final double height;
   final List<Track> tracks;
+  final String imageUrl;
   const CustomTrackList(
-      {super.key, required this.height, required this.tracks});
+      {super.key,
+      required this.height,
+      required this.tracks,
+      this.imageUrl = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +22,8 @@ class CustomTrackList extends StatelessWidget {
           return CustomTrackCard(
               width: 100,
               height: 80,
-              isFavorite: tracks[index].id.hashCode % 2 == 0,
-              imageUrl: tracks[index].smallImageUrl,
+              isFavorite: tracks[index].id.hashCode % 7 == 0,
+              imageUrl: imageUrl == "" ? tracks[index].smallImageUrl : imageUrl,
               trackName: tracks[index].name,
               artistName: tracks[index].artistName);
         },

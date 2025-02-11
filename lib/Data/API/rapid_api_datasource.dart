@@ -65,7 +65,7 @@ class RapidApiDatasource {
             "Failed to fetch Albums. Error code: ${response.statusCode}");
       }
     } catch (e) {
-      throw Exception("Failed to fetch Artist Albums");
+      throw Exception("Failed to fetch Artist Albums. Error info: $e");
     }
   }
 

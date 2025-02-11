@@ -6,18 +6,16 @@ class AlbumPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return const Align(
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
             Flexible(
               flex: 10,
-              child: Container(
-                  color: Colors.white.withOpacity(0.05),
-                  child: const AlbumGrid()),
+              child: AlbumGrid(),
             ),
-            const Spacer(
+            Spacer(
               flex: 1,
             ),
           ],

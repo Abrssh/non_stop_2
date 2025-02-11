@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:non_stop_2/Data/Model/album.dart';
 import 'package:non_stop_2/Domain/bloc/album_bloc/get_albums_bloc.dart';
 import 'package:non_stop_2/Domain/bloc/track_bloc/track_bloc.dart';
 
 class CustomAlbumWidget extends StatelessWidget {
-  final String albumName;
-  final String artistName;
-  final String albumId;
-  final String imageUrl;
-  final String releaseDate;
+  final Album album;
 
-  const CustomAlbumWidget(
-      {Key? key,
-      required this.albumName,
-      required this.artistName,
-      required this.albumId,
-      required this.imageUrl,
-      required this.releaseDate})
-      : super(key: key);
+  const CustomAlbumWidget({Key? key, required this.album}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.read<TrackBloc>().add(GetTracksByAlbumEvent(albumId: albumId));
+        context.read<TrackBloc>().add(GetTracksByAlbumEvent(albumId: album.id));
         Navigator.pushNamed(context, "/album-tracks", arguments: {
-          "name": albumName,
-          "largeImageUrl": imageUrl,
-          "artist": artistName,
-          "releaseDate": releaseDate,
+          "name": album.name,
+          "largeImageUrl": album.largeImageUrl,
+          "artist": album.artist,
+          "releaseDate": album.date,
+          "smallImageUrl": album.smallImageUrl,
         });
       },
       child: Container(
@@ -53,7 +44,7 @@ class CustomAlbumWidget extends StatelessWidget {
                   // clipBehavior: Clip.hardEdge,
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    imageUrl,
+                    album.largeImageUrl,
                     // height: 170,
                     width: double.infinity,
                     fit: BoxFit.fill,
@@ -70,12 +61,13 @@ class CustomAlbumWidget extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    albumName.length > 20
-                        ? '${albumName.substring(0, 17)}...'
-                        : albumName,
-                    style: const TextStyle(
+                    album.name.length > 20
+                        ? '${album.name.substring(0, 17)}...'
+                        : album.name,
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade200,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.visible,
@@ -91,12 +83,12 @@ class CustomAlbumWidget extends StatelessWidget {
                     width: 5,
                   ),
                   Text(
-                    artistName.length > 20
-                        ? '${artistName.substring(0, 17)}...'
-                        : artistName,
-                    style: const TextStyle(
+                    album.artist.length > 20
+                        ? '${album.artist.substring(0, 17)}...'
+                        : album.artist,
+                    style: TextStyle(
                       fontSize: 12,
-                      color: Colors.grey,
+                      color: Colors.grey.shade400,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.visible,
@@ -156,11 +148,7 @@ class AlbumGrid extends StatelessWidget {
                     itemCount: state.albumsList.length,
                     itemBuilder: (context, index) {
                       return CustomAlbumWidget(
-                        imageUrl: state.albumsList[index].largeImageUrl,
-                        albumName: state.albumsList[index].name,
-                        artistName: state.albumsList[index].artist,
-                        releaseDate: state.albumsList[index].date,
-                        albumId: state.albumsList[index].id,
+                        album: state.albumsList[index],
                       );
                     },
                   );
