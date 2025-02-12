@@ -6,8 +6,10 @@ import 'package:non_stop_2/Domain/bloc/track_bloc/track_bloc.dart';
 
 class CustomAlbumWidget extends StatelessWidget {
   final Album album;
+  final String artistName;
 
-  const CustomAlbumWidget({Key? key, required this.album}) : super(key: key);
+  const CustomAlbumWidget({Key? key, required this.album, this.artistName = ""})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class CustomAlbumWidget extends StatelessWidget {
         Navigator.pushNamed(context, "/album-tracks", arguments: {
           "name": album.name,
           "largeImageUrl": album.largeImageUrl,
-          "artist": album.artist,
+          "artist": artistName != "" ? artistName : album.artist,
           "releaseDate": album.date,
           "smallImageUrl": album.smallImageUrl,
         });
@@ -116,6 +118,8 @@ class AlbumGrid extends StatelessWidget {
         return BlocConsumer<GetAlbumsBloc, GetAlbumsState>(
           listener: (context, state) {
             if (state.isError && !state.isLoading) {
+              // debugPrint(
+              //     "AlbumList:${state.albumsList} isloading:${state.isLoading}");
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   backgroundColor: Colors.red,
@@ -134,6 +138,8 @@ class AlbumGrid extends StatelessWidget {
             }
           },
           builder: (context, state) {
+            // debugPrint(
+            //     "AlbumList Build:${state.albumsList} isloading:${state.isLoading}");
             return state.isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : GridView.builder(

@@ -32,6 +32,7 @@ class AlbumTracksPage extends StatelessWidget {
             ),
             expandedHeight: 300,
             pinned: true,
+            backgroundColor: Colors.grey.shade800,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 name,
@@ -65,7 +66,7 @@ class AlbumTracksPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Container(
-              decoration: BoxDecoration(color: Colors.black.withAlpha(195)),
+              decoration: BoxDecoration(color: Colors.grey.shade800),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -93,7 +94,7 @@ class AlbumTracksPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Container(
-              decoration: BoxDecoration(color: Colors.black.withAlpha(200)),
+              decoration: BoxDecoration(color: Colors.grey.shade800),
               child: BlocConsumer<TrackBloc, TrackState>(
                 listener: (context, state) {
                   debugPrint(

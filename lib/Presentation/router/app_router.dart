@@ -102,6 +102,7 @@ class AppRouter {
           builder: (context) => MultiBlocProvider(
             providers: [
               BlocProvider.value(value: _getAlbumsBloc),
+              BlocProvider.value(value: _trackBloc),
             ],
             child: ArtistAlbumsPage(
                 name: args["name"], largeImageUrl: args["largeImageUrl"]),

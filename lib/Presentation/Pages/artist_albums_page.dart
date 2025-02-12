@@ -17,6 +17,7 @@ class ArtistAlbumsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade800,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -27,6 +28,7 @@ class ArtistAlbumsPage extends StatelessWidget {
             ),
             expandedHeight: 250,
             pinned: true,
+            backgroundColor: Colors.grey.shade800,
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 name,
@@ -97,7 +99,7 @@ class ArtistAlbumsPage extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       Album album = state.artistAlbums[index];
-                      return CustomAlbumWidget(album: album);
+                      return CustomAlbumWidget(album: album, artistName: name);
                     },
                     childCount: state.artistAlbums.length,
                   ),

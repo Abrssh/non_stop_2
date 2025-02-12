@@ -16,7 +16,7 @@ class CustomArtistWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        debugPrint("Artist Id: $artistId");
+        // debugPrint("Artist Id: $artistId");
         context
             .read<GetAlbumsBloc>()
             .add(GetArtistAlbumsEvent(artistId: artistId));
