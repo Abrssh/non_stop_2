@@ -103,4 +103,9 @@ final class SearchedTracksState extends TrackState {
       isError: map['isError'] ?? false,
     );
   }
+
+  @override
+  String toString() {
+    return 'SearchedTracksState(tracks: ${tracks.length}, albumTracks: ${albumTracks.length}, topTracks: ${topTracks.length}, isIntial: $isIntial, isLoading: $isLoading, errorMessage: $errorMessage, isError: $isError)';
+  }
 }

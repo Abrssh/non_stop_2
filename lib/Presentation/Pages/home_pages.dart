@@ -17,8 +17,15 @@ class MyHomePage extends StatelessWidget {
       const FirstPage(),
       const AlbumPage(),
       const ArtistPage(),
-      const TrackPage(
-        height: 520,
+      Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.1,
+          ),
+          TrackPage(
+            height: MediaQuery.of(context).size.height * 0.8,
+          ),
+        ],
       ),
     ];
 

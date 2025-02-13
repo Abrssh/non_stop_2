@@ -11,12 +11,15 @@ class ArtistPage extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
+            Spacer(
+              flex: 1,
+            ),
             Flexible(
-              flex: 10,
+              flex: 20,
               child: ArtistGrid(),
             ),
             Spacer(
-              flex: 1,
+              flex: 2,
             ),
           ],
         ),

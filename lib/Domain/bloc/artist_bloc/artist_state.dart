@@ -51,6 +51,11 @@ final class ArtistState extends Equatable {
   }
 
   @override
+  String toString() {
+    return 'ArtistState(artists: ${artists.length}, isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage, isIntial: $isIntial)';
+  }
+
+  @override
   List<Object> get props =>
       [artists, isLoading, isError, errorMessage, isIntial];
 }

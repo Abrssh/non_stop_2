@@ -11,12 +11,18 @@ class AlbumPage extends StatelessWidget {
         padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Flexible(
-              flex: 10,
-              child: AlbumGrid(),
+            Spacer(
+              flex: 1,
             ),
             Spacer(
               flex: 1,
+            ),
+            Flexible(
+              flex: 25,
+              child: AlbumGrid(),
+            ),
+            Spacer(
+              flex: 4,
             ),
           ],
         ),

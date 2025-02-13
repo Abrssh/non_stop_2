@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'track_bloc.dart';
 
 sealed class TrackEvent extends Equatable {
@@ -17,6 +18,9 @@ class SearchTracksEvent extends TrackEvent {
 
   @override
   List<Object> get props => [query];
+
+  @override
+  String toString() => 'SearchTracksEvent(query: $query)';
 }
 
 class GetTracksByAlbumEvent extends TrackEvent {
@@ -25,4 +29,7 @@ class GetTracksByAlbumEvent extends TrackEvent {
 
   @override
   List<Object> get props => [albumId];
+
+  @override
+  String toString() => 'GetTracksByAlbumEvent(albumId: $albumId)';
 }

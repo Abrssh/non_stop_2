@@ -55,6 +55,11 @@ class GetAlbumsState extends Equatable {
       };
 
   @override
+  String toString() {
+    return 'GetAlbumsState{albumsList: ${albumsList.length}, artistAlbums: ${artistAlbums.length}, isLoading: $isLoading, isError: $isError, errorMessage: $errorMessage}';
+  }
+
+  @override
   List<Object> get props =>
       [albumsList, artistAlbums, isLoading, errorMessage, isError];
 }

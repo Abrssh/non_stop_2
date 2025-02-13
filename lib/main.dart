@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:non_stop_2/Presentation/router/app_router.dart';
+import 'package:non_stop_2/Utility/app_bloc_observer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,6 +18,8 @@ void main() async {
   await dotenv.load(fileName: "assets/api_key.env");
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
+
+  Bloc.observer = AppBlocObserver();
   runApp(MyApp(sharedPreferences: sharedPreferences));
 }
 

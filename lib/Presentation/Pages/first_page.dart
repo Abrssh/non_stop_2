@@ -73,7 +73,8 @@ class FirstPage extends StatelessWidget {
                     //     "Number of tracks: ${state.tracks.length} isIntial: ${state.isIntial} and isLoading: ${state.isLoading} error: ${state.errorMessage}");
                     return !state.isLoading
                         ? SizedBox(
-                            height: 160,
+                            // height: 160,
+                            height: MediaQuery.of(context).size.height * 0.35,
                             width: MediaQuery.of(context).size.width,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
