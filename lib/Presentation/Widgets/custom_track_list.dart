@@ -31,6 +31,7 @@ class CustomTrackList extends StatelessWidget {
               debugPrint("${details}track url: ${tracks[index].externalUrl}");
               _launchUrl(tracks[index].externalUrl);
             },
+            onLongPress: () => debugPrint(tracks[index].name),
             child: CustomTrackCard(
                 width: 100,
                 height: 80,
