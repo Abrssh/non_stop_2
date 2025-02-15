@@ -28,10 +28,10 @@ class CustomTrackList extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTapDown: (details) {
-              debugPrint("${details}track url: ${tracks[index].externalUrl}");
+              // debugPrint("${details}track url: ${tracks[index].externalUrl}");
               _launchUrl(tracks[index].externalUrl);
             },
-            onLongPress: () => debugPrint(tracks[index].name),
+            // onLongPress: () => debugPrint(tracks[index].name),
             child: CustomTrackCard(
                 width: 100,
                 height: 80,

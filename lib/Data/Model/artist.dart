@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-class Artist {
+class Artist extends Equatable {
   final String id, name, smallImageUrl, largeImageUrl;
   // final int popularity;
 
-  Artist({
+  const Artist({
     required this.id,
     required this.name,
     required this.smallImageUrl,
@@ -90,4 +91,7 @@ class Artist {
       // popularity: map['popularity'],
     );
   }
+
+  @override
+  List<Object?> get props => [id, name, smallImageUrl, largeImageUrl];
 }

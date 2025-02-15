@@ -8,13 +8,15 @@ class SearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: MediaQuery.of(context).orientation == Orientation.landscape
+          ? MediaQuery.of(context).size.height * 0.13
+          : MediaQuery.of(context).size.height * 0.08,
       child: Flex(direction: Axis.horizontal, children: [
         const Spacer(
           flex: 2,
         ),
         Expanded(
-            flex: 12,
+            flex: 15,
             child: Container(
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.2),
@@ -27,7 +29,7 @@ class SearchWidget extends StatelessWidget {
                     onPressed: () {},
                     icon: Icon(
                       Icons.menu_open_sharp,
-                      size: 20,
+                      size: 25,
                       color: Colors.white.withOpacity(0.8),
                     )),
               ),
@@ -38,6 +40,7 @@ class SearchWidget extends StatelessWidget {
         Expanded(
           flex: 80,
           child: Container(
+            height: double.infinity,
             decoration: BoxDecoration(
               color: Colors.black.withOpacity(0.2),
               borderRadius: BorderRadius.circular(10),
@@ -47,14 +50,18 @@ class SearchWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: TextField(
+                // cursorHeight: double.infinity,
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search,
-                        color: Colors.white.withOpacity(0.5), size: 25),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.white.withOpacity(0.5),
+                      size: 18,
+                    ),
                     prefixIconConstraints: const BoxConstraints(minWidth: 35),
                     border: InputBorder.none,
                     hintText: 'Search',
                     hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.5), fontSize: 13),
+                        color: Colors.white.withOpacity(0.5), fontSize: 16),
                     fillColor: Colors.white),
                 style: TextStyle(
                     color: Colors.white.withOpacity(0.5), fontSize: 13),

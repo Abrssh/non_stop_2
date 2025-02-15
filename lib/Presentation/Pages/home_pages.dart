@@ -20,10 +20,10 @@ class MyHomePage extends StatelessWidget {
       Column(
         children: [
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
           TrackPage(
-            height: MediaQuery.of(context).size.height * 0.8,
+            height: MediaQuery.of(context).size.height * 0.88,
           ),
         ],
       ),

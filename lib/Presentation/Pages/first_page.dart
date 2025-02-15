@@ -11,6 +11,8 @@ class FirstPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return PopScope(
       canPop: false,
       child: Padding(
@@ -22,12 +24,16 @@ class FirstPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: isLandscape
+                      ? MediaQuery.of(context).size.height * 0.03
+                      : MediaQuery.of(context).size.height * 0.06,
                 ),
                 const SearchWidget(),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: isLandscape
+                      ? MediaQuery.of(context).size.height * 0.02
+                      : MediaQuery.of(context).size.height * 0.03,
                 ),
                 Row(
                   children: [
@@ -74,7 +80,9 @@ class FirstPage extends StatelessWidget {
                     return !state.isLoading
                         ? SizedBox(
                             // height: 160,
-                            height: MediaQuery.of(context).size.height * 0.35,
+                            height: isLandscape
+                                ? MediaQuery.of(context).size.height * 0.4
+                                : MediaQuery.of(context).size.height * 0.3,
                             width: MediaQuery.of(context).size.width,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -88,7 +96,9 @@ class FirstPage extends StatelessWidget {
                             ),
                           )
                         : SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.35,
+                            height: isLandscape
+                                ? MediaQuery.of(context).size.height * 0.4
+                                : MediaQuery.of(context).size.height * 0.3,
                             child: const Center(
                                 child: CircularProgressIndicator()));
                   },
@@ -102,7 +112,11 @@ class FirstPage extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const TrackPage(height: 230)
+                TrackPage(
+                  height: isLandscape
+                      ? MediaQuery.of(context).size.height * 0.45
+                      : MediaQuery.of(context).size.height * 0.32,
+                ),
               ],
             ),
           ),

@@ -11,8 +11,8 @@ void main() {
         int testNumber = 2;
         int testNumber2 = testNumber * 2;
 
-        expect(expectedNumber, testNumber);
-        expect(expectedNumber2, testNumber2);
+        expect(testNumber, expectedNumber);
+        expect(testNumber2, expectedNumber2);
       });
 
       test("Second Unit test", () {

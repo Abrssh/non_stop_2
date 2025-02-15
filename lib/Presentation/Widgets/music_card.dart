@@ -9,15 +9,19 @@ class MusicCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Container(
-        width: 210,
-        height: 170,
+        width: MediaQuery.of(context).orientation == Orientation.landscape
+            ? MediaQuery.of(context).size.width * 0.3
+            : MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).orientation == Orientation.landscape
+            ? MediaQuery.of(context).size.height * 0.4
+            : MediaQuery.of(context).size.height * 0.3,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.white.withOpacity(1),
-              spreadRadius: -6,
-              blurRadius: 7,
+              color: Colors.white.withAlpha(50),
+              spreadRadius: 1,
+              blurRadius: 1,
               offset: const Offset(0, 0),
             ),
           ],
@@ -32,7 +36,10 @@ class MusicCard extends StatelessWidget {
                 imageUrl,
                 fit: BoxFit.cover,
                 alignment: Alignment.bottomLeft,
-                width: 210,
+                width:
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                        ? MediaQuery.of(context).size.width * 0.3
+                        : MediaQuery.of(context).size.width * 0.5,
               ),
             ),
           ),
