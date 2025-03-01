@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:non_stop_2/Domain/bloc/internet_conn_bloc.dart';
 import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
+// import 'package:non_stop_2/Presentation/Pages/AI/flexible_widgets.dart';
 import 'package:non_stop_2/Presentation/Pages/album_page.dart';
 import 'package:non_stop_2/Presentation/Pages/artist_page.dart';
 import 'package:non_stop_2/Presentation/Pages/first_page.dart';
@@ -27,6 +28,7 @@ class MyHomePage extends StatelessWidget {
           ),
         ],
       ),
+      // const FlexExamplePage()
     ];
 
     return Stack(

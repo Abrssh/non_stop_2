@@ -112,8 +112,11 @@ class AlbumGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final isLandscapeOrTablet = constraints.maxWidth > 600;
-        final crossAxisCount = isLandscapeOrTablet ? 4 : 2;
+        final isLandscapeOrTablet = constraints.maxWidth > 500;
+        final crossAxisCount = isLandscapeOrTablet ? 3 : 2;
+
+        debugPrint(
+            "AlbumGrid:isLandscapeOrTablet:$isLandscapeOrTablet crossAxisCount:$crossAxisCount constraints:${constraints.maxWidth}");
 
         return BlocConsumer<GetAlbumsBloc, GetAlbumsState>(
           listener: (context, state) {

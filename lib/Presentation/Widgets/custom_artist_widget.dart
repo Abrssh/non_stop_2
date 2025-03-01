@@ -80,47 +80,53 @@ class ArtistGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ArtistBloc, ArtistState>(
-      listener: (context, state) {
-        // debugPrint(
-        //     "Number of artists: ${state.artists.length} and isLoading: ${state.isLoading} and isError: ${state.isError} and errorMessage: ${state.errorMessage}");
-        if (state.isError && !state.isLoading) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: Colors.red,
-              margin: const EdgeInsets.only(
-                bottom: 80, // Adjust based on your bottom nav height
-                left: 10,
-                right: 10,
-              ),
-              behavior: SnackBarBehavior.floating,
-              content: Text(
-                state.errorMessage,
-                style: const TextStyle(color: Colors.white),
-              ),
-            ),
-          );
-        }
-      },
-      builder: (context, state) {
-        return !state.isLoading
-            ? GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 4.0,
-                  mainAxisSpacing: 4.0,
+    return LayoutBuilder(builder: (context, constraints) {
+      final isLandscapeOrTablet = constraints.maxWidth > 500;
+      final crossAxisCount = isLandscapeOrTablet ? 3 : 2;
+
+      return BlocConsumer<ArtistBloc, ArtistState>(
+        listener: (context, state) {
+          if (state.isError && !state.isLoading) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: Colors.red,
+                margin: const EdgeInsets.only(
+                  bottom: 80,
+                  left: 10,
+                  right: 10,
                 ),
-                itemCount: state.artists.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CustomArtistWidget(
-                    artistId: state.artists[index].id,
-                    artistName: state.artists[index].name,
-                    imageUrl: state.artists[index].largeImageUrl,
-                  );
-                },
-              )
-            : const Center(child: CircularProgressIndicator());
-      },
-    );
+                behavior: SnackBarBehavior.floating,
+                content: Text(
+                  state.errorMessage,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return state.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : GridView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    childAspectRatio: 3 / 5,
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 15.0,
+                    mainAxisExtent: 180,
+                  ),
+                  itemCount: state.artists.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CustomArtistWidget(
+                      artistId: state.artists[index].id,
+                      artistName: state.artists[index].name,
+                      imageUrl: state.artists[index].largeImageUrl,
+                    );
+                  },
+                );
+        },
+      );
+    });
   }
 }

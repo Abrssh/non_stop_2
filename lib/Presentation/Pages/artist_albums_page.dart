@@ -90,8 +90,11 @@ class ArtistAlbumsPage extends StatelessWidget {
               return SliverPadding(
                 padding: const EdgeInsets.all(8.0),
                 sliver: SliverGrid(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: MediaQuery.of(context).orientation ==
+                            Orientation.landscape
+                        ? 3
+                        : 2,
                     childAspectRatio: 0.8,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
