@@ -10,7 +10,7 @@ part 'internet_conn_event.dart';
 part 'internet_conn_state.dart';
 
 class InternetConnBloc extends Bloc<InternetConnEvent, InternetConnState> {
-  late final StreamSubscription internetSubscription;
+  StreamSubscription? internetSubscription;
   InternetConnBloc() : super(const InternetConnInitial()) {
     // Subscribe to stream on initialization
     // start_listening_to_connectivity();
@@ -76,7 +76,9 @@ class InternetConnBloc extends Bloc<InternetConnEvent, InternetConnState> {
 
   @override
   Future<void> close() {
-    internetSubscription.cancel();
+    if (internetSubscription != null) {
+      internetSubscription!.cancel();
+    }
     return super.close();
   }
 }
