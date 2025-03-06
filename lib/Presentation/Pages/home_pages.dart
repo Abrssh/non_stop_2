@@ -31,110 +31,75 @@ class MyHomePage extends StatelessWidget {
       // const FlexExamplePage()
     ];
 
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color.fromRGBO(93, 63, 130, 1),
-                Color.fromRGBO(62, 41, 90, 1),
-              ],
+    return PopScope(
+      canPop: false,
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color.fromRGBO(93, 63, 130, 1),
+                  Color.fromRGBO(62, 41, 90, 1),
+                ],
+              ),
             ),
           ),
-        ),
-        // Animated Background Color Change
-        // BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
-        //   builder: (context, state) {
-        //     List<List<Color>> gradients = [
-        //       [
-        //         const Color.fromRGBO(93, 63, 130, 1),
-        //         const Color.fromRGBO(62, 41, 90, 1),
-        //       ],
-        //       [
-        //         const Color.fromRGBO(143, 63, 130, 1),
-        //         const Color.fromRGBO(112, 41, 90, 1),
-        //       ],
-        //       [
-        //         const Color.fromRGBO(63, 143, 130, 1),
-        //         const Color.fromRGBO(41, 112, 90, 1),
-        //       ],
-        //       [
-        //         const Color.fromRGBO(63, 63, 143, 1),
-        //         const Color.fromRGBO(41, 41, 112, 1),
-        //       ],
-        //     ];
+          // Animated Background Color Change
+          // BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+          //   builder: (context, state) {
+          //     List<List<Color>> gradients = [
+          //       [
+          //         const Color.fromRGBO(93, 63, 130, 1),
+          //         const Color.fromRGBO(62, 41, 90, 1),
+          //       ],
+          //       [
+          //         const Color.fromRGBO(143, 63, 130, 1),
+          //         const Color.fromRGBO(112, 41, 90, 1),
+          //       ],
+          //       [
+          //         const Color.fromRGBO(63, 143, 130, 1),
+          //         const Color.fromRGBO(41, 112, 90, 1),
+          //       ],
+          //       [
+          //         const Color.fromRGBO(63, 63, 143, 1),
+          //         const Color.fromRGBO(41, 41, 112, 1),
+          //       ],
+          //     ];
 
-        //     return AnimatedContainer(
-        //       duration:
-        //           const Duration(milliseconds: 700), // Animation duration
-        //       curve: Curves.easeIn, // Animation curve
-        //       width: double.infinity,
-        //       height: double.infinity,
-        //       decoration: BoxDecoration(
-        //         gradient: LinearGradient(
-        //           begin: Alignment.topLeft,
-        //           end: Alignment.bottomRight,
-        //           colors: gradients[state.currentIndex],
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
-        BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
-          builder: (context, state) {
-            return Scaffold(
-                backgroundColor: Colors.transparent,
-                body: tabs[state.currentIndex]);
-          },
-        ),
-        const Align(
-          alignment: Alignment.bottomCenter,
-          child: CustomBottomNavBar(),
-        ),
-        // Internet Connection Listener
-        // FractionallySizedBox(
-        //   widthFactor: 0.8,
-        //   heightFactor: 0.9,
-        //   child: BlocListener<InternetConnBloc, InternetConnState>(
-        //       listener: (context, state) {
-        //         debugPrint("InternetConnState: ${state.connType}");
-        //       },
-        //       child: Row(
-        //         children: [
-        //           const Spacer(),
-        //           Text(
-        //             "Internet Conn",
-        //             style: Theme.of(context)
-        //                 .textTheme
-        //                 .bodyMedium!
-        //                 .copyWith(color: Colors.white),
-        //           ),
-        //           const Spacer(),
-        //           IconButton(
-        //               onPressed: () {
-        //                 // context.read<InternetConnBloc>().add(
-        //                 //       const CheckInternetConnEvent(param: "BlocParam"),
-        //                 //     );
-        //                 // context
-        //                 //     .read<InternetConnBloc>()
-        //                 //     .startListeningToConnectivity();
-        //                 context.read<InternetConnBloc>().add(
-        //                       const StartListeningEvent(param: "BlocParam"),
-        //                     );
-        //               },
-        //               icon: const Icon(
-        //                 Icons.refresh,
-        //                 color: Colors.white,
-        //               ))
-        //         ],
-        //       )),
-        // )
-      ],
+          //     return AnimatedContainer(
+          //       duration:
+          //           const Duration(milliseconds: 700), // Animation duration
+          //       curve: Curves.easeIn, // Animation curve
+          //       width: double.infinity,
+          //       height: double.infinity,
+          //       decoration: BoxDecoration(
+          //         gradient: LinearGradient(
+          //           begin: Alignment.topLeft,
+          //           end: Alignment.bottomRight,
+          //           colors: gradients[state.currentIndex],
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+          BlocBuilder<BottomNavigationCubit, BottomNavigationState>(
+            builder: (context, state) {
+              return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: tabs[state.currentIndex]);
+            },
+          ),
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomBottomNavBar(),
+          ),
+        ],
+      ),
     );
   }
 }

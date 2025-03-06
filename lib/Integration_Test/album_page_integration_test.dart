@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:non_stop_2/Presentation/Widgets/custom_track_list.dart';
 import 'package:non_stop_2/main.dart' as app;
@@ -9,6 +10,11 @@ import 'package:non_stop_2/Presentation/Pages/album_tracks_page.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  // Avoid duplicate registration of the same object for different tests
+  setUp(() {
+    GetIt.instance.reset();
+  });
 
   group('Album Page Navigation Flow Tests', () {
     testWidgets('Complete navigation flow to album tracks page',
