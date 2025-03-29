@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:non_stop_2/Domain/bloc/internet_conn_bloc.dart';
 import 'package:non_stop_2/Domain/cubit/bottom_navigation_cubit.dart';
-// import 'package:non_stop_2/Presentation/Pages/AI/flexible_widgets.dart';
 import 'package:non_stop_2/Presentation/Pages/album_page.dart';
 import 'package:non_stop_2/Presentation/Pages/artist_page.dart';
 import 'package:non_stop_2/Presentation/Pages/first_page.dart';
 import 'package:non_stop_2/Presentation/Pages/track_page.dart';
-import 'package:non_stop_2/Presentation/Pages/ui_training/advanced_scroll_page.dart';
-import 'package:non_stop_2/Presentation/Pages/ui_training/flexible_widgets.dart';
 import 'package:non_stop_2/Presentation/Widgets/custom_bottom_navigation_bar.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -20,18 +17,16 @@ class MyHomePage extends StatelessWidget {
       const FirstPage(),
       const AlbumPage(),
       const ArtistPage(),
-      // Column(
-      //   children: [
-      //     SizedBox(
-      //       height: MediaQuery.of(context).size.height * 0.05,
-      //     ),
-      //     TrackPage(
-      //       height: MediaQuery.of(context).size.height * 0.88,
-      //     ),
-      //   ],
-      // ),
-      // const FlexExamplePage()
-      const AdvancedScrollPage()
+      Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
+          ),
+          TrackPage(
+            height: MediaQuery.of(context).size.height * 0.88,
+          ),
+        ],
+      ),
     ];
 
     return PopScope(
