@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:non_stop_2/Data/API/album_local_storage_datasource.dart';
-import 'package:non_stop_2/Data/API/artist_local_storage_datasource.dart';
-import 'package:non_stop_2/Data/API/track_local_storage_datasource.dart';
-import 'package:non_stop_2/Data/API/rapid_api_datasource.dart';
-import 'package:non_stop_2/Data/Repository/album_repository.dart';
 import 'package:non_stop_2/Data/Repository/artist_repository.dart';
-import 'package:non_stop_2/Data/Repository/track_repository.dart';
 import 'package:non_stop_2/Dependency%20Injection/service_locator.dart';
 import 'package:non_stop_2/Domain/bloc/album_bloc/get_albums_bloc.dart';
 import 'package:non_stop_2/Domain/bloc/artist_bloc/artist_bloc.dart';
