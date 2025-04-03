@@ -21,7 +21,7 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   Future<void> _onGetTracksByAlbum(
       GetTracksByAlbumEvent event, Emitter<TrackState> emit) async {
     try {
-      emit(state.copyWith(isLoading: true, isError: false));
+      emit(state.copyWith(isLoading: true, isError: false, errorMessage: ""));
       List<Track> tracks =
           await getTracksUseCase.getTracksByAlbum(event.albumId);
       emit(state.copyWith(albumTracks: tracks, isLoading: false));
@@ -35,7 +35,7 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
   Future<void> _onSearchTracks(
       SearchTracksEvent event, Emitter<TrackState> emit) async {
     try {
-      emit(state.copyWith(isLoading: true, isError: false));
+      emit(state.copyWith(isLoading: true, isError: false, errorMessage: ""));
       List<Track> tracks = await getTracksUseCase.getTracks(event.query);
       emit(state.copyWith(tracks: tracks, isLoading: false));
     } catch (e) {
@@ -48,7 +48,8 @@ class TrackBloc extends HydratedBloc<TrackEvent, TrackState> {
       GetTopTracksEvent event, Emitter<TrackState> emit) async {
     try {
       debugPrint("Getting top tracks");
-      emit(state.copyWith(isLoading: true, isError: false, isIntial: true));
+      emit(state.copyWith(
+          isLoading: true, isError: false, errorMessage: "", isIntial: true));
       List<Track> tracks = await getTracksUseCase.getTopTracks();
       emit(state.copyWith(
           tracks: tracks,

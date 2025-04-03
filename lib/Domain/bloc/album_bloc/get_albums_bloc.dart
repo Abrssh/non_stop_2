@@ -32,7 +32,7 @@ class GetAlbumsBloc extends HydratedBloc<GetAlbumsEvent, GetAlbumsState> {
   void _getArtistAlbums(
       GetArtistAlbumsEvent event, Emitter<GetAlbumsState> emit) async {
     try {
-      emit(state.copyWith(isLoading: true, isError: false));
+      emit(state.copyWith(isLoading: true, isError: false, errorMessage: ""));
       List<Album> albums =
           await albumsUseCase.getAlbumsByArtist(event.artistId);
       emit(state.copyWith(artistAlbums: albums, isLoading: false));
