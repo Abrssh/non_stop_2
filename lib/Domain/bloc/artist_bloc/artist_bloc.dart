@@ -20,9 +20,13 @@ class ArtistBloc extends HydratedBloc<GetArtistsEvent, ArtistState> {
     try {
       debugPrint("GetArtistsEvent Executed");
       if (state.isIntial) {
-        emit(state.copyWith(isLoading: true, isIntial: false));
+        emit(state.copyWith(
+            isLoading: true,
+            isIntial: false,
+            isError: false,
+            errorMessage: ""));
       } else {
-        emit(state.copyWith(isLoading: true));
+        emit(state.copyWith(isLoading: true, isError: false, errorMessage: ""));
       }
       List<Artist> artists = await getArtistsUseCase.getArtists();
       emit(state.copyWith(isLoading: false, artists: artists));

@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:non_stop_2/Data/API/album_local_storage_datasource.dart';
-import 'package:non_stop_2/Data/API/artist_local_storage_datasource.dart';
-import 'package:non_stop_2/Data/API/track_local_storage_datasource.dart';
-import 'package:non_stop_2/Data/API/rapid_api_datasource.dart';
-import 'package:non_stop_2/Data/Repository/album_repository.dart';
 import 'package:non_stop_2/Data/Repository/artist_repository.dart';
-import 'package:non_stop_2/Data/Repository/track_repository.dart';
+import 'package:non_stop_2/Dependency%20Injection/service_locator.dart';
 import 'package:non_stop_2/Domain/bloc/album_bloc/get_albums_bloc.dart';
 import 'package:non_stop_2/Domain/bloc/artist_bloc/artist_bloc.dart';
 import 'package:non_stop_2/Domain/bloc/internet_bloc/internet_conn_bloc.dart';
@@ -23,24 +18,10 @@ class AppRouter {
   final BottomNavigationCubit _bottomNavigationCubit = BottomNavigationCubit();
   final InternetConnBloc _internetConnBloc = InternetConnBloc();
   final SharedPreferences sharedPreferences;
-  final TrackBloc _trackBloc;
-  final GetAlbumsBloc _getAlbumsBloc;
 
-  AppRouter({required this.sharedPreferences})
-      : _trackBloc = TrackBloc(
-          getTracksUseCase: TrackRepository(
-            rapidApiDatasource: RapidApiDatasource(),
-            trackLocalStorageDataSource:
-                TrackLocalStorageDataSource(prefs: sharedPreferences),
-          ),
-        ),
-        _getAlbumsBloc = GetAlbumsBloc(
-          albumsUseCase: AlbumRepository(
-            rapidApiDatasource: RapidApiDatasource(),
-            albumLocalStorageDatasource:
-                AlbumLocalStorageDatasource(prefs: sharedPreferences),
-          ),
-        );
+  AppRouter({required this.sharedPreferences}) {
+    setupServiceLocator(sharedPreferences);
+  }
 
   Route onGenerateRoute(RouteSettings settings) {
     debugPrint("Called onGenerateRoute");
@@ -55,26 +36,15 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => MultiRepositoryProvider(
             providers: [
-              RepositoryProvider(
-                create: (context) => ArtistRepository(
-                    rapidApiDatasource: RapidApiDatasource(),
-                    artistLocalStorageDatasource:
-                        ArtistLocalStorageDatasource(prefs: sharedPreferences)),
-                lazy: true,
-              ),
+              RepositoryProvider.value(value: getIt<ArtistRepository>())
             ],
             child: MultiBlocProvider(
               providers: [
                 BlocProvider.value(value: _bottomNavigationCubit),
                 BlocProvider.value(value: _internetConnBloc),
-                // BlocProvider.value(value: _trackBloc),
-                BlocProvider.value(value: _trackBloc),
-                BlocProvider.value(value: _getAlbumsBloc),
-                BlocProvider(
-                  lazy: true,
-                  create: (context) => ArtistBloc(
-                      getArtistsUseCase: context.read<ArtistRepository>()),
-                ),
+                BlocProvider.value(value: getIt<TrackBloc>()),
+                BlocProvider.value(value: getIt<GetAlbumsBloc>()),
+                BlocProvider.value(value: getIt<ArtistBloc>()),
               ],
               child: const MyHomePage(),
             ),
@@ -85,7 +55,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
             providers: [
-              BlocProvider.value(value: _trackBloc),
+              BlocProvider.value(value: getIt<TrackBloc>()),
             ],
             child: AlbumTracksPage(
               name: args['name'],
@@ -101,8 +71,8 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (context) => MultiBlocProvider(
             providers: [
-              BlocProvider.value(value: _getAlbumsBloc),
-              BlocProvider.value(value: _trackBloc),
+              BlocProvider.value(value: getIt<GetAlbumsBloc>()),
+              BlocProvider.value(value: getIt<TrackBloc>()),
             ],
             child: ArtistAlbumsPage(
                 name: args["name"], largeImageUrl: args["largeImageUrl"]),

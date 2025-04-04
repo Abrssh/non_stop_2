@@ -50,7 +50,7 @@ class Artist extends Equatable {
       const String defaultUrl =
           "https://images.pexels.com/photos/17573962/pexels-photo-17573962/free-photo-of-portrait-of-woman-holding-vinyl-record-to-her-face.jpeg?";
 
-      return Artist(
+      return const Artist(
         id: "0",
         name: "Unknown",
         largeImageUrl: defaultUrl,
